@@ -26,7 +26,7 @@ public class TestBoardCell {
 	}
 
 
-	public Set<TestBoardCell> getAdjList(Set<TestBoardCell> adjList) {
+	public Set<TestBoardCell> getAdjList() {
 		return null;
 	}
 
