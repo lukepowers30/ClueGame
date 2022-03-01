@@ -72,7 +72,7 @@ class BoardTestsExp {
 		assertTrue(adjList.contains(board.getCell(2, 0)));
 		assertTrue(adjList.contains(board.getCell(1, 1)));
 		assertTrue(adjList.contains(board.getCell(3, 1)));
-		assertEquals(3, adjList.size());
+		assertEquals(4, adjList.size());
 	}
 	
 	@Test
@@ -141,6 +141,10 @@ class BoardTestsExp {
 		board.getCell(3, 1).setOccupied(true);
 		board.getCell(0, 1).setRoom(true);
 		Set<TestBoardCell> targets = board.getTargets();
+		for (TestBoardCell c: targets) {
+			System.out.println(c.getRow() + " " + c.getCol());
+		}
+		
 		assertEquals(7, targets.size());
 		assertTrue(targets.contains(board.getCell(0, 0)));
 		assertTrue(targets.contains(board.getCell(1, 1)));
