@@ -137,9 +137,10 @@ class BoardTestsExp {
 	@Test
 	void testTargetsMixed() {
 		TestBoardCell cell = board.getCell(2, 2);
-		board.calcTargets(cell,  6);
+		
 		board.getCell(3, 1).setOccupied(true);
 		board.getCell(0, 1).setRoom(true);
+		board.calcTargets(cell,  6);
 		Set<TestBoardCell> targets = board.getTargets();
 		for (TestBoardCell c: targets) {
 			System.out.println(c.getRow() + " " + c.getCol());
