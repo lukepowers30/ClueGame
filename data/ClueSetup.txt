@@ -1,0 +1,13 @@
+// Rooms and room cards
+Room, Kitchen, K
+Room, Dining Room, D
+Room, Bedroom, B
+Room, Theatre, T
+Room, Porch, P
+Room, Office, O
+Room, Mud Room, M
+Room, Garage, G
+Room, Sun Room, S
+// other spaces on board
+Space, Unused, X
+Space, Walkway, W
