@@ -39,8 +39,46 @@ public class Board {
 	/*
 	 * initialize the board (since we are using singleton pattern)
 	 */
-	public void initialize(){
-		loadSetupConfig();
+	public void initialize() {
+		try {
+			loadSetupConfig();
+		} catch (BadConfigFormatException e) {
+			System.out.println(e.getMessage());
+		}
+		
+		try {
+			loadLayoutConfig();
+		} catch (BadConfigFormatException e) {
+			System.out.println(e.getMessage());
+		}
+		
+	}
+
+	public void loadSetupConfig() throws BadConfigFormatException  {
+		File setup = new File(setupConfigfile);
+		Scanner reader = null;
+		try {
+			reader = new Scanner(setup);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		while(reader.hasNextLine()) {
+			String space = reader.nextLine();
+			String[] line = space.split(", ");
+			if(line[0].substring(0,2).equals("//")) {
+				continue;
+			}else if (line[0].equals("Room") || line[0].equals("Space")){
+				Room temp = new Room(line[1]);
+				char sym = line[2].charAt(0);
+				roomMap.put(sym, temp);
+			} else {
+				throw new BadConfigFormatException();
+			}
+		}
+	}
+
+	public void loadLayoutConfig() throws BadConfigFormatException {
 		File layout = new File(layoutConfigFile);
 		Scanner reader = null;
 		try {
@@ -68,46 +106,21 @@ public class Board {
 				grid[i][j] = new BoardCell(i, j);
 			}
 		}
-		loadLayoutConfig();
-	}
-
-	public void loadSetupConfig() {
-		File setup = new File(setupConfigfile);
-		Scanner reader = null;
+		
+		File layout2 = new File(layoutConfigFile);
+		Scanner reader2 = null;
 		try {
-			reader = new Scanner(setup);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		while(reader.hasNextLine()) {
-			String space = reader.nextLine();
-			String[] line = space.split(", ");
-			if(line[0].substring(0,2).equals("//")) {
-				continue;
-			}else{
-				Room temp = new Room(line[1]);
-				char sym = line[2].charAt(0);
-				roomMap.put(sym, temp);
-			}
-		}
-	}
-
-	public void loadLayoutConfig() {
-		File layout = new File(layoutConfigFile);
-		Scanner reader = null;
-		try {
-			reader = new Scanner(layout);
+			reader2 = new Scanner(layout2);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		int row = 0, col;
-		while(reader.hasNextLine()) {
-			String line = reader.nextLine();
+		while(reader2.hasNextLine()) {
+			String line2 = reader2.nextLine();
 			col = 0;
 			char last = ',';
-			for(char c: line.toCharArray()) {
+			for(char c: line2.toCharArray()) {
 				if(c == ',') {
 					col++;
 					last = c;
@@ -133,11 +146,16 @@ public class Board {
 						grid[row][col].setDoorDirection(DoorDirection.LEFT);
 					}else if(c == '>'){
 						grid[row][col].setDoorDirection(DoorDirection.RIGHT);
+					} else {
+						throw new BadConfigFormatException("Board Layout refers to a room that does not exist.");
 					}
 					last = c;
 				}
 			}
 			row++;
+			if (col+1 != numColumns) {
+				throw new BadConfigFormatException("board layout file has inconsistent column numbers.");
+			}
 		}
 	}
 

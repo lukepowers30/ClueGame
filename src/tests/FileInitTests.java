@@ -90,7 +90,7 @@ class FileInitTests {
 					if (cell.isDoorway())
 						numDoors++;
 				}
-			Assert.assertEquals(37, numDoors);
+			Assert.assertEquals(47, numDoors);
 		}
 
 		// Test a few room cells to ensure the room initial is correct.
@@ -125,7 +125,7 @@ class FileInitTests {
 			cell = board.getCell(25, 14);
 			room = board.getRoom( cell ) ;
 			assertTrue( room != null );
-			assertEquals( room.getName(), "Patio" ) ;
+			assertEquals( room.getName(), "Porch" ) ;
 			assertTrue( cell.getSecretPassage() == 'K' );
 			
 			// test a walkway
