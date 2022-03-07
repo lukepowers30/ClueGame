@@ -158,6 +158,11 @@ public class Board {
 			}
 		}
 	}
+	
+	public Set<BoardCell> getAdjList(int i, int j) {
+		
+		return new HashSet<BoardCell>();
+	}
 
 	public void setConfigFiles(String csv, String txt) {
 		this.layoutConfigFile = "data/" + csv;
@@ -187,16 +192,16 @@ public class Board {
 	public BoardCell getCell(int row, int col) {
 		return grid[row][col];
 	}
-	
-	public static void main(String[] args) {
-		// Board is singleton, get the only instance
-		Board board = Board.getInstance();
-		// set the file names to use my config files
-		board.setConfigFiles("ClueLayout306.csv", "ClueSetup306.txt");
-		// Initialize will load BOTH config files
-		board.initialize();
+	public void calcTargets(BoardCell cell, int i) {
+		// TODO Auto-generated method stub
+		
+	}
+	public Set<BoardCell> getTargets() {
+		// TODO Auto-generated method stub
+		return new HashSet<BoardCell>();
 	}
 	
+
 	
 
 }
