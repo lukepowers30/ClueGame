@@ -52,6 +52,7 @@ public class Board {
 			System.out.println(e.getMessage());
 		}
 		
+		calcAdjacencies();
 	}
 
 	public void loadSetupConfig() throws BadConfigFormatException  {
@@ -127,7 +128,12 @@ public class Board {
 					continue;
 				}else if(roomMap.containsKey(c) && last == ',') {
 					grid[row][col].setInitial(c);
-					grid[row][col].setRoom(true);
+					if (c != 'W' && c != 'X') {
+						grid[row][col].setRoom(true);
+					} else {
+						grid[row][col].setRoom(false);
+					}
+						
 					last = c;
 				}else {
 					if(roomMap.containsKey(c)) {
@@ -161,7 +167,7 @@ public class Board {
 	
 	public Set<BoardCell> getAdjList(int i, int j) {
 		
-		return new HashSet<BoardCell>();
+		return grid[i][j].getAdjList();
 	}
 
 	public void setConfigFiles(String csv, String txt) {
@@ -192,15 +198,64 @@ public class Board {
 	public BoardCell getCell(int row, int col) {
 		return grid[row][col];
 	}
-	public void calcTargets(BoardCell cell, int i) {
-		// TODO Auto-generated method stub
-		
+	public void calcTargets( BoardCell startCell, int pathlength) {
+		visited.clear();
+		targets.clear();
+		visited.add(startCell);
+		findAllTargets(startCell, pathlength);
+	}	
+	private void findAllTargets(BoardCell thisCell, int stepsLeft) {
+		for (BoardCell c: thisCell.getAdjList()) {
+			if (c.isRoom() ) {
+				targets.add(c);
+				continue;
+			}
+			if (visited.contains(c) || c.isOccupied()) {
+				continue;
+			}
+			visited.add(c);
+			if (stepsLeft == 1) {
+				targets.add(c);
+			} else {
+				findAllTargets(c, stepsLeft-1);
+			}
+			visited.remove(c);
+		}
 	}
 	public Set<BoardCell> getTargets() {
-		// TODO Auto-generated method stub
-		return new HashSet<BoardCell>();
+		return targets;
 	}
 	
+	public void calcAdjacencies () {
+		for (int i = 0; i < numRows; i++) {
+			for (int j = 0; j < numColumns; j++) {
+				if (grid[i][j].getSecretPassage() != ' ') {
+					roomMap.get(grid[i][j].getInitial()).getCenterCell().addAdj(roomMap.get(grid[i][j].getSecretPassage()).getCenterCell());
+				} else if (grid[i][j].getInitial() == 'W'){
+					if ((i-1) >= 0)
+					    isAdjacent(grid[i][j], grid[i-1][j], DoorDirection.UP);
+					if ((i+1) < numRows)
+						isAdjacent(grid[i][j], grid[i+1][j], DoorDirection.DOWN);
+					if ((j-1) >= 0)
+						isAdjacent(grid[i][j], grid[i][j-1], DoorDirection.LEFT);
+					if ((j+1) < numColumns)
+						isAdjacent(grid[i][j], grid[i][j+1], DoorDirection.RIGHT);
+				}
+			}
+		}
+	}
+	
+	private void isAdjacent(BoardCell current, BoardCell adj, DoorDirection dd) {
+		if (adj.getInitial() == 'W') {
+			current.addAdj(adj);
+		} else if (adj.isRoom() && current.isDoorway()) {
+			if (current.getDoorDirection() == dd) {
+				BoardCell roomCenter = roomMap.get(adj.getInitial()).getCenterCell();
+				current.addAdj(roomCenter);
+				roomCenter.addAdj(current);
+			}
+		}
+	}
 
 	
 

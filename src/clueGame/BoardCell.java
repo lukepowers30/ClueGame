@@ -1,5 +1,6 @@
 package clueGame;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import experiment.TestBoardCell;
@@ -24,6 +25,8 @@ public class BoardCell {
 		super();
 		this.row = row;
 		this.col = col;
+		this.secretPassage = ' ';
+		adjList = new HashSet<BoardCell>();
 		doorDirection = DoorDirection.NONE;
 	}
 
@@ -98,6 +101,17 @@ public class BoardCell {
 
 	public void setInitial(char initial) {
 		this.initial = initial;
+	}
+
+
+	public Set<BoardCell> getAdjList() {
+		// TODO Auto-generated method stub
+		return adjList;
+	}
+
+
+	public boolean isOccupied() {
+		return isOccupied;
 	}
 	
 	
