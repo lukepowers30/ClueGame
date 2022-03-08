@@ -206,11 +206,14 @@ public class Board {
 	}	
 	private void findAllTargets(BoardCell thisCell, int stepsLeft) {
 		for (BoardCell c: thisCell.getAdjList()) {
+			if(visited.contains(c)) {
+				continue;
+			}
 			if (c.isRoom() ) {
 				targets.add(c);
 				continue;
 			}
-			if (visited.contains(c) || c.isOccupied()) {
+			if (c.isOccupied()) {
 				continue;
 			}
 			visited.add(c);
