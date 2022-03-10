@@ -61,7 +61,6 @@ public class Board {
 		try {
 			reader = new Scanner(setup);
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		while(reader.hasNextLine()) {
@@ -85,7 +84,6 @@ public class Board {
 		try {
 			reader = new Scanner(layout);
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		int rows = 0, cols = 1;
@@ -113,7 +111,6 @@ public class Board {
 		try {
 			reader2 = new Scanner(layout2);
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		int row = 0, col;
@@ -180,7 +177,7 @@ public class Board {
 	}
 
 	public Room getRoom(BoardCell cell) {
-		if(cell.isRoom()) {
+		if(cell.isRoom() || cell.getInitial() == 'W' || cell.getInitial() == 'X') {
 			return roomMap.get(cell.getInitial());
 		}else {
 			return null;

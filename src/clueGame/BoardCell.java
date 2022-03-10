@@ -105,7 +105,6 @@ public class BoardCell {
 
 
 	public Set<BoardCell> getAdjList() {
-		// TODO Auto-generated method stub
 		return adjList;
 	}
 
