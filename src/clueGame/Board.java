@@ -45,13 +45,13 @@ public class Board {
 		} catch (BadConfigFormatException e) {
 			System.out.println(e.getMessage());
 		}
-		
+
 		try {
 			loadLayoutConfig();
 		} catch (BadConfigFormatException e) {
 			System.out.println(e.getMessage());
 		}
-		
+
 		calcAdjacencies();
 	}
 
@@ -77,7 +77,7 @@ public class Board {
 			}
 		}
 	}
-	
+
 	public void setupGrid() {
 		File layout = new File(layoutConfigFile);
 		Scanner reader = null;
@@ -133,40 +133,50 @@ public class Board {
 					} else {
 						grid[row][col].setRoom(false);
 					}
-						
+
 					last = c;
 				}else {
 					if(roomMap.containsKey(c)) {
 						grid[row][col].setSecretPassage(c);
-					}else if(c == '*') {
-						grid[row][col].setRoomCenter(true);
-						roomMap.get(last).setCenterCell(grid[row][col]);
-					}else if(c == '#') {
-						grid[row][col].setRoomLabel(true);
-						roomMap.get(last).setLabelCell(grid[row][col]);
-					}else if(c == '^'){
-						grid[row][col].setDoorDirection(DoorDirection.UP);
-					}else if(c == 'v'){
-						grid[row][col].setDoorDirection(DoorDirection.DOWN);
-					}else if(c == '<'){
-						grid[row][col].setDoorDirection(DoorDirection.LEFT);
-					}else if(c == '>'){
-						grid[row][col].setDoorDirection(DoorDirection.RIGHT);
-					} else {
-						throw new BadConfigFormatException("Board Layout refers to a room that does not exist.");
+					}else {
+						switch (c) {
+						case '*':
+							grid[row][col].setRoomCenter(true);
+							roomMap.get(last).setCenterCell(grid[row][col]);
+							break;
+						case '#':
+							grid[row][col].setRoomLabel(true);
+							roomMap.get(last).setLabelCell(grid[row][col]);
+							break;
+						case '^':
+							grid[row][col].setDoorDirection(DoorDirection.UP);
+							break;
+						case 'v':
+							grid[row][col].setDoorDirection(DoorDirection.DOWN);
+							break;
+						case '<':
+							grid[row][col].setDoorDirection(DoorDirection.LEFT);
+							break;
+						case '>':
+							grid[row][col].setDoorDirection(DoorDirection.RIGHT);
+							break;
+						default:
+							throw new BadConfigFormatException("Board Layout refers to a room that does not exist.");
+						}
 					}
-					last = c;
 				}
+				last = c;
 			}
 			row++;
 			if (col+1 != numColumns) {
 				throw new BadConfigFormatException("board layout file has inconsistent column numbers.");
 			}
 		}
+
 	}
-	
+
 	public Set<BoardCell> getAdjList(int i, int j) {
-		
+
 		return grid[i][j].getAdjList();
 	}
 
@@ -186,11 +196,11 @@ public class Board {
 			return null;
 		}
 	}
-	
+
 	public int getNumRows() {
 		return numRows;
 	}
-	
+
 	public int getNumColumns() {
 		return numColumns;
 	}
@@ -228,7 +238,7 @@ public class Board {
 	public Set<BoardCell> getTargets() {
 		return targets;
 	}
-	
+
 	public void calcAdjacencies () {
 		for (int i = 0; i < numRows; i++) {
 			for (int j = 0; j < numColumns; j++) {
@@ -236,7 +246,7 @@ public class Board {
 					roomMap.get(grid[i][j].getInitial()).getCenterCell().addAdj(roomMap.get(grid[i][j].getSecretPassage()).getCenterCell());
 				} else if (grid[i][j].getInitial() == 'W'){
 					if ((i-1) >= 0)
-					    isAdjacent(grid[i][j], grid[i-1][j], DoorDirection.UP);
+						isAdjacent(grid[i][j], grid[i-1][j], DoorDirection.UP);
 					if ((i+1) < numRows)
 						isAdjacent(grid[i][j], grid[i+1][j], DoorDirection.DOWN);
 					if ((j-1) >= 0)
@@ -247,7 +257,7 @@ public class Board {
 			}
 		}
 	}
-	
+
 	private void isAdjacent(BoardCell current, BoardCell adj, DoorDirection dd) {
 		if (adj.getInitial() == 'W') {
 			current.addAdj(adj);
@@ -260,6 +270,6 @@ public class Board {
 		}
 	}
 
-	
+
 
 }
