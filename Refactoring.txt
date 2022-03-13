@@ -1,0 +1,179 @@
+//Before Changes
+
+public void loadLayoutConfig() throws BadConfigFormatException {
+		File layout = new File(layoutConfigFile);
+		Scanner reader = null;
+		try {
+			reader = new Scanner(layout);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		int rows = 0, cols = 1;
+		String line = null;
+		while(reader.hasNextLine()) {
+			line = reader.nextLine();
+			rows++;
+		}
+		numRows = rows;
+		for(char c: line.toCharArray()) {
+			if(c == ',') {
+				cols++;
+			}
+		}
+		numColumns = cols;
+		grid = new BoardCell[numRows][numColumns];
+		for(int i =0; i < numRows; i++) {
+			for(int j =0; j < numColumns; j++) {
+				grid[i][j] = new BoardCell(i, j);
+			}
+		}
+		
+		File layout2 = new File(layoutConfigFile);
+		Scanner reader2 = null;
+		try {
+			reader2 = new Scanner(layout2);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		int row = 0, col;
+		while(reader2.hasNextLine()) {
+			String line2 = reader2.nextLine();
+			col = 0;
+			char last = ',';
+			for(char c: line2.toCharArray()) {
+				if(c == ',') {
+					col++;
+					last = c;
+					continue;
+				}else if(roomMap.containsKey(c) && last == ',') {
+					grid[row][col].setInitial(c);
+					if (c != 'W' && c != 'X') {
+						grid[row][col].setRoom(true);
+					} else {
+						grid[row][col].setRoom(false);
+					}
+						
+					last = c;
+				}else {
+					if(roomMap.containsKey(c)) {
+						grid[row][col].setSecretPassage(c);
+					}else if(c == '*') {
+						grid[row][col].setRoomCenter(true);
+						roomMap.get(last).setCenterCell(grid[row][col]);
+					}else if(c == '#') {
+						grid[row][col].setRoomLabel(true);
+						roomMap.get(last).setLabelCell(grid[row][col]);
+					}else if(c == '^'){
+						grid[row][col].setDoorDirection(DoorDirection.UP);
+					}else if(c == 'v'){
+						grid[row][col].setDoorDirection(DoorDirection.DOWN);
+					}else if(c == '<'){
+						grid[row][col].setDoorDirection(DoorDirection.LEFT);
+					}else if(c == '>'){
+						grid[row][col].setDoorDirection(DoorDirection.RIGHT);
+					} else {
+						throw new BadConfigFormatException("Board Layout refers to a room that does not exist.");
+					}
+					last = c;
+				}
+			}
+			row++;
+			if (col+1 != numColumns) {
+				throw new BadConfigFormatException("board layout file has inconsistent column numbers.");
+			}
+		}
+	}
+
+
+
+
+
+
+//After Changes to split the loadLayout to set up the grid and then setup the board
+
+public void setupGrid() {
+		File layout = new File(layoutConfigFile);
+		Scanner reader = null;
+		try {
+			reader = new Scanner(layout);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		int rows = 0, cols = 1;
+		String line = null;
+		while(reader.hasNextLine()) {
+			line = reader.nextLine();
+			rows++;
+		}
+		numRows = rows;
+		for(char c: line.toCharArray()) {
+			if(c == ',') {
+				cols++;
+			}
+		}
+		numColumns = cols;
+		grid = new BoardCell[numRows][numColumns];
+		for(int i =0; i < numRows; i++) {
+			for(int j =0; j < numColumns; j++) {
+				grid[i][j] = new BoardCell(i, j);
+			}
+		}
+	}
+
+	public void loadLayoutConfig() throws BadConfigFormatException {
+		setupGrid();
+		File layout = new File(layoutConfigFile);
+		Scanner reader = null;
+		try {
+			reader = new Scanner(layout);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		int row = 0, col;
+		while(reader.hasNextLine()) {
+			String line = reader.nextLine();
+			col = 0;
+			char last = ',';
+			for(char c: line.toCharArray()) {
+				if(c == ',') {
+					col++;
+					last = c;
+					continue;
+				}else if(roomMap.containsKey(c) && last == ',') {
+					grid[row][col].setInitial(c);
+					if (c != 'W' && c != 'X') {
+						grid[row][col].setRoom(true);
+					} else {
+						grid[row][col].setRoom(false);
+					}
+						
+					last = c;
+				}else {
+					if(roomMap.containsKey(c)) {
+						grid[row][col].setSecretPassage(c);
+					}else if(c == '*') {
+						grid[row][col].setRoomCenter(true);
+						roomMap.get(last).setCenterCell(grid[row][col]);
+					}else if(c == '#') {
+						grid[row][col].setRoomLabel(true);
+						roomMap.get(last).setLabelCell(grid[row][col]);
+					}else if(c == '^'){
+						grid[row][col].setDoorDirection(DoorDirection.UP);
+					}else if(c == 'v'){
+						grid[row][col].setDoorDirection(DoorDirection.DOWN);
+					}else if(c == '<'){
+						grid[row][col].setDoorDirection(DoorDirection.LEFT);
+					}else if(c == '>'){
+						grid[row][col].setDoorDirection(DoorDirection.RIGHT);
+					} else {
+						throw new BadConfigFormatException("Board Layout refers to a room that does not exist.");
+					}
+					last = c;
+				}
+			}
+			row++;
+			if (col+1 != numColumns) {
+				throw new BadConfigFormatException("board layout file has inconsistent column numbers.");
+			}
+		}
+	}

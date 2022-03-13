@@ -77,8 +77,8 @@ public class Board {
 			}
 		}
 	}
-
-	public void loadLayoutConfig() throws BadConfigFormatException {
+	
+	public void setupGrid() {
 		File layout = new File(layoutConfigFile);
 		Scanner reader = null;
 		try {
@@ -105,20 +105,23 @@ public class Board {
 				grid[i][j] = new BoardCell(i, j);
 			}
 		}
-		
-		File layout2 = new File(layoutConfigFile);
-		Scanner reader2 = null;
+	}
+
+	public void loadLayoutConfig() throws BadConfigFormatException {
+		setupGrid();
+		File layout = new File(layoutConfigFile);
+		Scanner reader = null;
 		try {
-			reader2 = new Scanner(layout2);
+			reader = new Scanner(layout);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
 		int row = 0, col;
-		while(reader2.hasNextLine()) {
-			String line2 = reader2.nextLine();
+		while(reader.hasNextLine()) {
+			String line = reader.nextLine();
 			col = 0;
 			char last = ',';
-			for(char c: line2.toCharArray()) {
+			for(char c: line.toCharArray()) {
 				if(c == ',') {
 					col++;
 					last = c;
