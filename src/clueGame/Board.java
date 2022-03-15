@@ -248,6 +248,11 @@ public class Board {
 		return targets;
 	}
 
+	/*
+	 * Creates the adjacency list for every BoardCell in grid.
+	 * 
+	 * This function is executed during the initialization of the board, and it makes calcTargets much easier.
+	 */
 	public void calcAdjacencies () {
 		for (int i = 0; i < numRows; i++) {
 			for (int j = 0; j < numColumns; j++) {
@@ -267,6 +272,9 @@ public class Board {
 		}
 	}
 
+	/*
+	 * Helper function that adds a specific cell to a neighboring cell's adjacency list if it fits the criteria
+	 */
 	private void isAdjacent(BoardCell current, BoardCell adj, DoorDirection dd) {
 		if (adj.getInitial() == 'W') {			// if adjacent cell is a walkway just add it
 			current.addAdj(adj);
