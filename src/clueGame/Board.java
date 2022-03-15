@@ -209,12 +209,20 @@ public class Board {
 	public BoardCell getCell(int row, int col) {
 		return grid[row][col];
 	}
+	
+	/*
+	 * Calculates the possible move locations for a given starting cell and roll amount
+	 */
 	public void calcTargets( BoardCell startCell, int pathlength) {
 		visited.clear();
 		targets.clear();
 		visited.add(startCell);
 		findAllTargets(startCell, pathlength);
 	}	
+	
+	/*
+	 * Recursive function that adds neighboring cells to the Set of targets for the given BoardCell
+	 */
 	private void findAllTargets(BoardCell thisCell, int stepsLeft) {
 		for (BoardCell c: thisCell.getAdjList()) {			// iterate through all adjacent cells
 			if(visited.contains(c)) {
