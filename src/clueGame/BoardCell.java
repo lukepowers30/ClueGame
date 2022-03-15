@@ -63,6 +63,9 @@ public class BoardCell {
 		return secretPassage;
 	}
 	
+	/*
+	 * Returns true unless doorDirection is NONE
+	 */
 	public boolean isDoorway() {
 		return (doorDirection != DoorDirection.NONE);
 	}
