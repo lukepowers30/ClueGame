@@ -20,7 +20,10 @@ public class BoardCell {
 	
 	
 	
-	
+	/*
+	 * Constructor for BoardCell only takes the row and column. 
+	 * All other attributes are filled after the constructor.
+	 */
 	public BoardCell(int row, int col) {
 		super();
 		this.row = row;

@@ -32,12 +32,12 @@ public class Board {
 		this.visited = new HashSet<BoardCell>();
 		this.roomMap = new HashMap<Character, Room>();
 	}
-	// this method returns the only Board
+	// this method returns the only instance of Board (since we are using singleton pattern)
 	public static Board getInstance() {
 		return theInstance;
 	}
 	/*
-	 * initialize the board (since we are using singleton pattern)
+	 * initialize the board
 	 */
 	public void initialize() {
 		try {
@@ -72,6 +72,10 @@ public class Board {
 		}
 	}
 
+	/*
+	 * Loops through the layoutConfigFile to determine the number of rows and columns required for the grid
+	 * Initializes the grid array and all BoardCells in that grid
+	 */
 	public void setupGrid() {
 		File layout = new File(layoutConfigFile);		//getting file and reader for layout
 		Scanner reader = null;
@@ -101,6 +105,9 @@ public class Board {
 		}
 	}
 
+	/*
+	 * Reads the layoutConfigFile and inputs that data into the grid array.
+	 */
 	public void loadLayoutConfig() throws BadConfigFormatException {
 		setupGrid();
 		File layout = new File(layoutConfigFile);		//getting file and reader for layout
@@ -129,7 +136,7 @@ public class Board {
 					}
 
 					last = c;
-				}else {												// if second charater in the cell
+				}else {												// if second character in the cell
 					if(roomMap.containsKey(c)) {
 						grid[row][col].setSecretPassage(c);
 					}else {
