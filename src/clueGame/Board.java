@@ -190,12 +190,8 @@ public class Board {
 		return roomMap.get(key);
 	}
 
-	public Room getRoom(BoardCell cell) {
-		if(cell.isRoom() || cell.getInitial() == 'W' || cell.getInitial() == 'X') {		// X and W are not defined as a room but are in the roomMap 
-			return roomMap.get(cell.getInitial());
-		}else {
-			return null;
-		}
+	public Room getRoom(BoardCell cell) { 
+		return roomMap.get(cell.getInitial());
 	}
 
 	public int getNumRows() {
