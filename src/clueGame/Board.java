@@ -20,6 +20,10 @@ public class Board {
 	private Map<Character, Room> roomMap;
 	private Set<BoardCell> targets;
 	private Set<BoardCell> visited;
+	private Set<Card> deck;
+	private Solution theAnswer;
+	private Set<Player> players;
+	
 
 	/*
 	 * variable and methods used for singleton pattern
@@ -281,6 +285,14 @@ public class Board {
 				roomCenter.addAdj(current);
 			}
 		}
+	}
+	public Set<Player> getPlayers() {
+		// TODO Auto-generated method stub
+		return new HashSet<Player>();
+	}
+	
+	public Set<Card> getDeck() {
+		return new HashSet<Card>();
 	}
 
 

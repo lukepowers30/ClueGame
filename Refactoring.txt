@@ -1,3 +1,66 @@
+Git Log for the duration of the refactoring process.
+
+commit d1b5ae24ac862238f04af2ded90e863573d18309
+Author: lukepowers30 <lukepowers@mines.edu>
+Date:   Mon Mar 14 20:23:39 2022 -0600
+
+    Refactoring complete
+
+commit 1b8697d2563e2e7b3d302834acc735709407429f
+Author: lukepowers30 <lukepowers@mines.edu>
+Date:   Mon Mar 14 20:22:26 2022 -0600
+
+    Simplified getRoom function in Board
+
+commit 7e632c34950a9883d66eaa7a43628b870116be29
+Author: lukepowers30 <lukepowers@mines.edu>
+Date:   Mon Mar 14 20:19:53 2022 -0600
+
+    More comments to improve readability
+
+commit 1ab42d14690db8f42f7f503ef3e97a43570aad44
+Author: lukepowers30 <lukepowers@mines.edu>
+Date:   Mon Mar 14 20:15:14 2022 -0600
+
+    Added Block Comments to Board.java
+
+commit dd810bd68c527e796387d89d44d4bdc7d9154cdc
+Author: lukepowers30 <lukepowers@mines.edu>
+Date:   Mon Mar 14 20:10:20 2022 -0600
+
+    Added block comments to BoardCell.java
+
+commit acd77bcf281c676528f8d7c78272cd33100d55e5
+Author: jrkohlsaat <jrkohlsaat@mines.edu>
+Date:   Sat Mar 12 19:16:08 2022 -0600
+
+    commented out Board
+
+commit 0aba0c47ffae67aa9e5778fc4eb422d426b0bcfb
+Author: jrkohlsaat <jrkohlsaat@mines.edu>
+Date:   Sat Mar 12 19:01:14 2022 -0600
+
+    combined the try-catch block in initialize
+
+commit 6e05021dc10fe95366c327ec17708bcd59222da1
+Author: jrkohlsaat <jrkohlsaat@mines.edu>
+Date:   Sat Mar 12 18:59:36 2022 -0600
+
+    changed the if-else in loadlayoutconfig to a switch
+
+commit 0b2d435cbb185a2c138bec3c96c79f6b46a1cbf7
+Author: jrkohlsaat <jrkohlsaat@mines.edu>
+Date:   Sat Mar 12 18:40:42 2022 -0600
+
+    Changed the loadLayoutConfig to be two seprate functions
+
+commit a6cc9b77884a23eebf4b1778538922423dfa7fbd
+Author: jrkohlsaat <jrkohlsaat@mines.edu>
+Date:   Thu Mar 10 13:40:57 2022 -0700
+
+    got rid of TODO statements
+
+Code Snippet of the Most Significant Change
 //Before Changes
 
 public void loadLayoutConfig() throws BadConfigFormatException {
