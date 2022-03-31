@@ -57,5 +57,21 @@ class GameSetupTest {
 		}
 		assertEquals(board.getDeck().size(), 21);
 	}
+	
+	@Test
+	void solutionTest () {
+		Solution sol = board.getSolution();
+		assertTrue(sol.getPerson().getCardType() == CardType.CHARACTER);
+		assertTrue(sol.getWeapon().getCardType() == CardType.WEAPON);
+		assertTrue(sol.getRoom().getCardType() == CardType.ROOM);
+	}
+	
+	@Test
+	void allCardsDealtTest () {
+		for (Player p: board.getPlayers()) {
+			assertEquals(p.getHand().size(), 3);
+		}
+		assertTrue(board.getDeck().isEmpty());
+	}
 
 }

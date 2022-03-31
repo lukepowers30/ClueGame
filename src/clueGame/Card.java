@@ -11,4 +11,10 @@ public class Card {
 	public CardType getCardType() {
 		return null;
 	}
+
+	public Card(String cardName, CardType cardType) {
+		super();
+		this.cardName = cardName;
+		this.cardType = cardType;
+	}
 }

@@ -1,12 +1,16 @@
 package clueGame;
 
 import java.util.HashSet;
+import java.awt.Color;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.TreeSet;
 
 import experiment.TestBoardCell;
 
@@ -35,6 +39,9 @@ public class Board {
 		this.targets = new HashSet<BoardCell>();
 		this.visited = new HashSet<BoardCell>();
 		this.roomMap = new HashMap<Character, Room>();
+		
+		this.deck = new HashSet<Card>();
+		this.players = new HashSet<Player>();
 	}
 	// this method returns the only instance of Board (since we are using singleton pattern)
 	public static Board getInstance() {
@@ -51,8 +58,44 @@ public class Board {
 			System.out.println(e.getMessage());
 		}
 		calcAdjacencies();
+		makeSolution();
+		//dealRemainingCards();
 	}
 
+	private void dealRemainingCards() {
+		
+		while (!deck.isEmpty()) {
+			for (Player p: players) {
+				
+			}
+		}
+		
+		
+	}
+	private void makeSolution() {
+		Random rand = new Random();
+		ArrayList<Card> playerDeck = new ArrayList<Card>();
+		ArrayList<Card> roomDeck = new ArrayList<Card>();
+		ArrayList<Card> weaponDeck = new ArrayList<Card>();
+		for (Card c: deck) {
+			if (c.getCardType() == CardType.ROOM) {
+				roomDeck.add(c);
+			} else if (c.getCardType() == CardType.WEAPON) {
+				weaponDeck.add(c);
+			} else if (c.getCardType() == CardType.CHARACTER) {
+				playerDeck.add(c);
+			}
+		}
+		Card solPlayer = playerDeck.get(rand.nextInt() % 6);
+		Card solRoom = roomDeck.get(rand.nextInt() % 9);
+		Card solWeapon = weaponDeck.get(rand.nextInt() % 6);
+		
+		deck.remove(solWeapon);
+		deck.remove(solPlayer);
+		deck.remove(solRoom);
+		
+		theAnswer = new Solution(solRoom, solPlayer, solWeapon);
+	}
 	public void loadSetupConfig() throws BadConfigFormatException  {
 		File setup = new File(setupConfigfile);		// getting file and reader for setup
 		Scanner reader = null;
@@ -66,11 +109,48 @@ public class Board {
 			String[] line = space.split(", ");		// parsing through the line
 			if(line[0].substring(0,2).equals("//")) {	// ignore comments
 				continue;
-			}else if (line[0].equals("Room") || line[0].equals("Space")){		// handling specific lines by adding room to roomMap
+			}else if (line[0].equals("Room")){		// handling specific lines by adding room to roomMap
 				Room temp = new Room(line[1]);
 				char sym = line[2].charAt(0);
 				roomMap.put(sym, temp);
-			} else {
+				Card room = new Card(line[1], CardType.ROOM);
+				deck.add(room);
+			} else if (line[0].equals("Space")) {
+				Room temp = new Room(line[1]);
+				char sym = line[2].charAt(0);
+				roomMap.put(sym, temp);
+			} else if (line[0].equals("Weapon")){
+				Card weapon = new Card(line[1], CardType.WEAPON);
+				deck.add(weapon);
+			} else if (line[0].equals("Player")) {
+				Color color = new Color(0, 0, 0);
+				if (line[3].equals("green")) {
+					color = Color.green;
+				}else if (line[3].equals("blue")) {
+					color = Color.blue;
+				}else if (line[3].equals("magenta")) {
+					color = Color.magenta;
+				}else if (line[3].equals("orange")) {
+					color = Color.orange;
+				}else if (line[3].equals("red")) {
+					color = Color.red;
+				}else if (line[3].equals("yellow")) {
+					color = Color.yellow;
+				}
+				if (line[1].equals("Human")) {
+					
+					Player player = new HumanPlayer(line[2], color, Integer.parseInt(line[4]), Integer.parseInt(line[5]));
+					players.add(player);
+					Card card = new Card(line[2], CardType.CHARACTER);
+					deck.add(card);
+				} else if (line[1].equals("Computer")) {
+					Player player = new ComputerPlayer(line[2], color, Integer.parseInt(line[4]), Integer.parseInt(line[5]));
+					players.add(player);
+					Card card = new Card(line[2], CardType.CHARACTER);
+					deck.add(card);
+				}
+				
+			} else {	
 				throw new BadConfigFormatException();
 			}
 		}
@@ -293,6 +373,10 @@ public class Board {
 	
 	public Set<Card> getDeck() {
 		return new HashSet<Card>();
+	}
+	
+	public Solution getSolution () {
+		return theAnswer;
 	}
 
 
