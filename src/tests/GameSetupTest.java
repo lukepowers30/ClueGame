@@ -28,7 +28,7 @@ class GameSetupTest {
 		for (Player p: board.getPlayers()) {
 			if (p instanceof clueGame.HumanPlayer) {
 				humanCount++;
-				assertEquals(p.getName(), "user");
+				assertEquals(p.getName(), "George");
 			} else if (p instanceof clueGame.ComputerPlayer) {
 				computerCount++;
 			}
@@ -37,12 +37,16 @@ class GameSetupTest {
 		assertEquals(board.getPlayers().size(), 6);
 		assertEquals(humanCount, 1);
 		assertEquals(computerCount, 5);
-		
-		fail("Not yet implemented");
 	}
 	
 	@Test
 	void deckTest () {
+		try {
+			board.loadSetupConfig();			//The deck is empty at the end of initialize so to run tests we must reinitialize
+		} catch (BadConfigFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		int roomCt = 0;
 		int  weaponCt = 0;
 		int characterCt = 0;
@@ -56,6 +60,10 @@ class GameSetupTest {
 			}
 		}
 		assertEquals(board.getDeck().size(), 21);
+		assertEquals(roomCt, 9);
+		assertEquals(characterCt, 6);
+		assertEquals(weaponCt, 6);
+		board.initialize();				// Reinitialize
 	}
 	
 	@Test

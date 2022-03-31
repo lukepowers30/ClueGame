@@ -27,5 +27,6 @@ public abstract class Player {
 		this.color = color;
 		this.row = row;
 		this.column = column;
+		this.hand = new HashSet<Card>();
 	}
 }

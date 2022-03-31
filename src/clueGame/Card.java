@@ -9,7 +9,7 @@ public class Card {
 	}
 	
 	public CardType getCardType() {
-		return null;
+		return cardType;
 	}
 
 	public Card(String cardName, CardType cardType) {

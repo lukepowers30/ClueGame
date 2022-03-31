@@ -59,19 +59,26 @@ public class Board {
 		}
 		calcAdjacencies();
 		makeSolution();
-		//dealRemainingCards();
+		dealRemainingCards();
 	}
+	
 
 	private void dealRemainingCards() {
-		
-		while (!deck.isEmpty()) {
+		Object[] cardArray = deck.toArray();
+		Random rand = new Random();
+		int plus = rand.nextInt(cardArray.length);
+		int iter = plus;
+		do {
 			for (Player p: players) {
-				
+				p.updateHand((Card) cardArray[iter]);
+				deck.remove((Card) cardArray[iter]);
+				iter = (iter + 1) % cardArray.length;
 			}
-		}
-		
-		
+		}while(iter != plus);
+			
 	}
+	
+	
 	private void makeSolution() {
 		Random rand = new Random();
 		ArrayList<Card> playerDeck = new ArrayList<Card>();
@@ -86,9 +93,9 @@ public class Board {
 				playerDeck.add(c);
 			}
 		}
-		Card solPlayer = playerDeck.get(rand.nextInt() % 6);
-		Card solRoom = roomDeck.get(rand.nextInt() % 9);
-		Card solWeapon = weaponDeck.get(rand.nextInt() % 6);
+		Card solPlayer = playerDeck.get(rand.nextInt(6));
+		Card solRoom = roomDeck.get(rand.nextInt(10));
+		Card solWeapon = weaponDeck.get(rand.nextInt(6));
 		
 		deck.remove(solWeapon);
 		deck.remove(solPlayer);
@@ -96,6 +103,8 @@ public class Board {
 		
 		theAnswer = new Solution(solRoom, solPlayer, solWeapon);
 	}
+	
+	
 	public void loadSetupConfig() throws BadConfigFormatException  {
 		File setup = new File(setupConfigfile);		// getting file and reader for setup
 		Scanner reader = null;
@@ -367,12 +376,11 @@ public class Board {
 		}
 	}
 	public Set<Player> getPlayers() {
-		// TODO Auto-generated method stub
-		return new HashSet<Player>();
+		return players;
 	}
 	
 	public Set<Card> getDeck() {
-		return new HashSet<Card>();
+		return deck;
 	}
 	
 	public Solution getSolution () {
