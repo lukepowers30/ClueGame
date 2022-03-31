@@ -12,19 +12,12 @@ Room, Sun Room, S
 Space, Unused, X
 Space, Walkway, W
 // players
-Player, Human, user
-Player, Computer, Bob
-Player, Computer, Joe
-Player, Computer, Jane
-Player, Computer, Michael
-Player, Computer, Sally
-// player cards
-green, 18, 0
-blue, 8, 0
-magenta, 0, 9
-orange, 0, 17
-red, 7, 30
-yellow, 20, 27
+Player, Human, George, green, 18, 0
+Player, Computer, Bob, blue, 8, 0
+Player, Computer, Joe, magenta, 0, 9
+Player, Computer, Jane, orange, 0, 17
+Player, Computer, Michael, red, 7, 30
+Player, Computer, Sally, yellow, 20, 27
 // weapons
 Weapon, Revolver
 Weapon, Dagger
