@@ -14,6 +14,7 @@ import clueGame.CardType;
 import clueGame.ComputerPlayer;
 import clueGame.Player;
 import clueGame.Room;
+import clueGame.Solution;
 
 class ComputerAITest {
 	
@@ -31,29 +32,75 @@ class ComputerAITest {
 
 	@Test
 	void makeSuggestionTest() {
-		ComputerPlayer test = (ComputerPlayer) board.getPlayers().get(2);
-		int counter = 0;
-		boolean skip = true;
-		for(Card c: board.getDeck()) {
-			if(skip) {
-				return;
-			}else {
-				test.updateSeen(c);
-			}
-			
-		}
+		ComputerPlayer test = (ComputerPlayer) board.getPlayers().get(1);
+		
+		//Test for room matches
+		Solution sol1 = test.makeSuggestion(board.getRoom('K'));
+		assertEquals("Kitchen", sol1.getRoom().getCardName());
+		
+		
+		
+		// Adding cards to seen
+		test.updateSeen(new Card("George", CardType.CHARACTER));
+		test.updateSeen(new Card("Bob", CardType.CHARACTER));
+		test.updateSeen(new Card("Joe", CardType.CHARACTER));
+		int counterJane = 0;
+		int counterMichael = 0;
+		int counterSally = 0;
+		
+		test.updateSeen(new Card("Revolver", CardType.WEAPON));
+		test.updateSeen(new Card("Dagger", CardType.WEAPON));
+		test.updateSeen(new Card("Lead Pipe", CardType.WEAPON));
+		int counterRope = 0;
+		int counterCandleStick = 0;
+		int counterWrench = 0;
+		
+		// Tests for multiple unseen weapons and people
 		for(int i = 0; i < 200; i++) {
-			test.makeSuggestion(board.getRoom('K'));
+			Solution sol2 = test.makeSuggestion(board.getRoom('K'));
+			if (sol2.getPerson().getCardName().equals("Jane")) {
+				counterJane++;
+			} else if (sol2.getPerson().getCardName().equals("Michael")) {
+				counterMichael++;
+			} else if (sol2.getPerson().getCardName().equals("Sally")) {
+				counterSally++;
+			}
+			if (sol2.getWeapon().getCardName().equals("Rope")) {
+				counterRope++;
+			} else if (sol2.getWeapon().getCardName().equals("Candlestick")) {
+				counterCandleStick++;
+			} else if (sol2.getWeapon().getCardName().equals("Wrench")) {
+				counterWrench++;
+			} 
 		}
+		assertTrue(counterJane > 1);
+		assertTrue(counterMichael > 1);
+		assertTrue(counterSally > 1);
+		assertTrue(counterRope > 1);
+		assertTrue(counterCandleStick > 1);
+		assertTrue(counterWrench > 1);
+		
+		// Only one weapon and person not seen
+		test.updateSeen(new Card("Jane", CardType.CHARACTER));
+		test.updateSeen(new Card("Michael", CardType.CHARACTER));
+		test.updateSeen(new Card("Rope", CardType.WEAPON));
+		test.updateSeen(new Card("Candlestick", CardType.WEAPON));
+		
+		Solution sol3 = test.makeSuggestion(board.getRoom('K'));
+		assertEquals("Sally", sol3.getPerson().getCardName());
+		assertEquals("Wrench", sol3.getWeapon().getCardName());
 	}
 	
 	
 	@Test
 	void moveTest() {
+		// Tests for an unseen room
 		ComputerPlayer test = new ComputerPlayer("test", Color.black, 4, 19);
 		test.move(1);
 		Room room = board.getRoom(board.getCell(test.getRow(), test.getColumn()));
 		assertEquals(room.getName(), "Mud Room");
+		
+		// Test for no room
 		ComputerPlayer test2 = new ComputerPlayer("test", Color.black, 18, 1);
 		int counter180 = 0;
 		int counter171 = 0;
@@ -72,6 +119,34 @@ class ComputerAITest {
 		assertTrue(counter180 > 0);
 		assertTrue(counter182 > 0);
 		assertTrue(counter171 > 0);
+		
+		ComputerPlayer test3 = new ComputerPlayer("test", Color.black, 4, 19);
+		test3.updateSeen(new Card("Mud Room", CardType.ROOM));
+		
+		int counter418 = 0;
+		int counter519 = 0;
+		int counter420 = 0;
+		int counter224 = 0;
+		for(int i = 0; i < 100; i++) {
+			test3 = new ComputerPlayer("test", Color.black, 4, 19);
+			test3.updateSeen(new Card("Mud Room", CardType.ROOM));
+			test3.move(1);
+			if(test3.getRow() == 4 && test3.getColumn() == 18) {
+				counter418++;
+			}else if(test3.getRow() == 5 && test3.getColumn() == 19) {
+				counter519++;
+			}else if(test3.getRow() == 4 && test3.getColumn() == 20) {
+				counter420++;
+			}else if(test3.getRow() == 2 && test3.getColumn() == 24) {
+				counter224++;
+			}
+		}
+		assertTrue(counter224 > 1);
+		assertTrue(counter418 > 1);
+		assertTrue(counter519 > 1);
+		assertTrue(counter420 > 1);
+		
+		
 	}
 
 }

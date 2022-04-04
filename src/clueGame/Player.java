@@ -31,6 +31,7 @@ public abstract class Player {
 		this.row = row;
 		this.column = column;
 		this.hand = new HashSet<Card>();
+		this.seen = new HashSet<Card>();
 	}
 	
 	
@@ -58,6 +59,21 @@ public abstract class Player {
 		}
 	}
 	
+	public boolean seenOrHandContainsName(String name) {
+		for (Card c: seen) {
+			if (c.getCardName().equals(name)) {
+				return true;
+			}
+		}
+		for (Card c: hand) {
+			if (c.getCardName().equals(name)) {
+				return true;
+			}
+		}
+		return false;
+		
+	}
+	
 	public void updateSeen(Card card) {
 		seen.add(card);
 	}
@@ -78,6 +94,14 @@ public abstract class Player {
 		this.column = column;
 	}
 
+	public Room getRoom() {
+		Board board = Board.getInstance();
+		return board.getRoom(board.getCell(row, column));
+	}
+
+	public Set<Card> getSeen() {
+		return seen;
+	}
 	
 	
 }
