@@ -12,6 +12,14 @@ public class Solution {
 		this.weapon = weapon;
 	}
 	
+	public boolean isEquals(Solution sol) {
+		if(this.room == sol.room && this.person == sol.person && this.weapon == sol.weapon) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
 	public Card getRoom() {
 		return room;
 	}
@@ -30,5 +38,7 @@ public class Solution {
 	public void setWeapon(Card weapon) {
 		this.weapon = weapon;
 	}
+	
+	
 	
 }

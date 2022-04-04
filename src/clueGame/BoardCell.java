@@ -118,6 +118,16 @@ public class BoardCell {
 	public boolean isOccupied() {
 		return isOccupied;
 	}
+
+
+	public int getRow() {
+		return row;
+	}
+
+
+	public int getCol() {
+		return col;
+	}
 	
 	
 	

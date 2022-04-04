@@ -1,6 +1,8 @@
 package clueGame;
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
 
 public abstract class Player {
@@ -33,10 +35,49 @@ public abstract class Player {
 	
 	
 	public Card disproveSuggestion(Solution suggestion) {
-		return null;
+		ArrayList<Card> matches = new ArrayList<Card>();
+		for(Card c: hand) {
+			if(c == suggestion.getPerson()) {
+				matches.add(c);
+			}
+			if(c == suggestion.getWeapon()) {
+				matches.add(c);
+			}
+			if(c == suggestion.getRoom()) {
+				matches.add(c);
+			}
+		}
+		
+		if(matches.size() == 0) {
+			return null;
+		}else if(matches.size() == 1) {
+			return matches.get(0);
+		}else {
+			Random rand = new Random();
+			return matches.get(rand.nextInt(matches.size()));
+		}
 	}
 	
 	public void updateSeen(Card card) {
 		seen.add(card);
 	}
+
+	public int getRow() {
+		return row;
+	}
+
+	public int getColumn() {
+		return column;
+	}
+
+	public void setRow(int row) {
+		this.row = row;
+	}
+
+	public void setColumn(int column) {
+		this.column = column;
+	}
+
+	
+	
 }

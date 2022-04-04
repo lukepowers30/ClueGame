@@ -383,10 +383,21 @@ public class Board {
 	
 	
 	public boolean checkAccusation(Solution accusation) {
-		return true;
+		return accusation.isEquals(theAnswer);
 	}
 	
 	public Card handleSuggestion(Solution suggestion, Player caller) {
+		int index = players.indexOf(caller);
+		int stop = index;
+		index++;
+		Card disprove;
+		do {
+			disprove = players.get(index).disproveSuggestion(suggestion);
+			if(disprove != null) {
+				return disprove;
+			}
+			index = (index + 1) % players.size();
+		}while(index != stop);
 		return null;
 	}
 	
