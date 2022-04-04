@@ -26,7 +26,7 @@ public class Board {
 	private Set<BoardCell> visited;
 	private Set<Card> deck;
 	private Solution theAnswer;
-	private Set<Player> players;
+	private ArrayList<Player> players;
 	
 
 	/*
@@ -41,7 +41,7 @@ public class Board {
 		this.roomMap = new HashMap<Character, Room>();
 		
 		this.deck = new HashSet<Card>();
-		this.players = new HashSet<Player>();
+		this.players = new ArrayList<Player>();
 	}
 	// this method returns the only instance of Board (since we are using singleton pattern)
 	public static Board getInstance() {
@@ -65,19 +65,22 @@ public class Board {
 
 	private void dealRemainingCards() {
 		Object[] cardArray = deck.toArray();
+		Set<Card> tempDeck = new HashSet<Card>(deck);
 		Random rand = new Random();
 		int plus = rand.nextInt(cardArray.length);
 		int iter = plus;
 		do {
 			for (Player p: players) {
-				if (!deck.isEmpty()) {
+				if (!tempDeck.isEmpty()) {
 					p.updateHand((Card) cardArray[iter]);
-					deck.remove((Card) cardArray[iter]);
+					tempDeck.remove((Card) cardArray[iter]);
 					iter = (iter + 1) % cardArray.length;
 				}
 			}
 		}while(iter != plus);
-			
+		deck.add(theAnswer.getPerson());
+		deck.add(theAnswer.getRoom());
+		deck.add(theAnswer.getWeapon());
 	}
 	
 	
@@ -150,12 +153,12 @@ public class Board {
 				}
 				if (line[1].equals("Human")) {
 					
-					Player player = new HumanPlayer(line[2], color, Integer.parseInt(line[4]), Integer.parseInt(line[5]));
+					HumanPlayer player = new HumanPlayer(line[2], color, Integer.parseInt(line[4]), Integer.parseInt(line[5]));
 					players.add(player);
 					Card card = new Card(line[2], CardType.CHARACTER);
 					deck.add(card);
 				} else if (line[1].equals("Computer")) {
-					Player player = new ComputerPlayer(line[2], color, Integer.parseInt(line[4]), Integer.parseInt(line[5]));
+					ComputerPlayer player = new ComputerPlayer(line[2], color, Integer.parseInt(line[4]), Integer.parseInt(line[5]));
 					players.add(player);
 					Card card = new Card(line[2], CardType.CHARACTER);
 					deck.add(card);
@@ -377,7 +380,18 @@ public class Board {
 			}
 		}
 	}
-	public Set<Player> getPlayers() {
+	
+	
+	public boolean checkAccusation(Solution accusation) {
+		return true;
+	}
+	
+	public Card handleSuggestion(Solution suggestion, Player caller) {
+		return null;
+	}
+	
+	
+	public ArrayList<Player> getPlayers() {
 		return players;
 	}
 	
@@ -388,7 +402,15 @@ public class Board {
 	public Solution getSolution () {
 		return theAnswer;
 	}
+	
+	public void setTheAnswer(Solution theAnswer) {
+		this.theAnswer = theAnswer;
+	}
+	
+	public void setPlayers(ArrayList<Player>  players) {
+		this.players = players;
+	}
 
-
+	
 
 }

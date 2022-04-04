@@ -5,7 +5,11 @@ public class Card {
 	private CardType cardType;
 	
 	public boolean isEquals (Card card) {
-		return false;
+		if(this.cardName == card.cardName && this.cardType == card.cardType) {
+			return true;
+		}else {
+			return false;
+		}
 	}
 	
 	public CardType getCardType() {

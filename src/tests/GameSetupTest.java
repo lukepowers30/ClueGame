@@ -41,12 +41,6 @@ class GameSetupTest {
 	
 	@Test
 	void deckTest () {
-		try {
-			board.loadSetupConfig();			//The deck is empty at the end of initialize so to run tests we must reinitialize
-		} catch (BadConfigFormatException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		int roomCt = 0;
 		int  weaponCt = 0;
 		int characterCt = 0;
@@ -63,7 +57,6 @@ class GameSetupTest {
 		assertEquals(roomCt, 9);
 		assertEquals(characterCt, 6);
 		assertEquals(weaponCt, 6);
-		board.initialize();				// Reinitialize
 	}
 	
 	@Test
@@ -79,7 +72,6 @@ class GameSetupTest {
 		for (Player p: board.getPlayers()) {
 			assertEquals(p.getHand().size(), 3);
 		}
-		assertTrue(board.getDeck().isEmpty());
 	}
 
 }

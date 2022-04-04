@@ -8,6 +8,7 @@ public abstract class Player {
 	private Color color;
 	private int row, column;
 	private Set<Card> hand;
+	protected Set<Card> seen;
 	
 	public String getName () {
 		return name;
@@ -28,5 +29,14 @@ public abstract class Player {
 		this.row = row;
 		this.column = column;
 		this.hand = new HashSet<Card>();
+	}
+	
+	
+	public Card disproveSuggestion(Solution suggestion) {
+		return null;
+	}
+	
+	public void updateSeen(Card card) {
+		seen.add(card);
 	}
 }
