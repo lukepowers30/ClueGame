@@ -70,9 +70,11 @@ public class Board {
 		int iter = plus;
 		do {
 			for (Player p: players) {
-				p.updateHand((Card) cardArray[iter]);
-				deck.remove((Card) cardArray[iter]);
-				iter = (iter + 1) % cardArray.length;
+				if (!deck.isEmpty()) {
+					p.updateHand((Card) cardArray[iter]);
+					deck.remove((Card) cardArray[iter]);
+					iter = (iter + 1) % cardArray.length;
+				}
 			}
 		}while(iter != plus);
 			
@@ -94,7 +96,7 @@ public class Board {
 			}
 		}
 		Card solPlayer = playerDeck.get(rand.nextInt(6));
-		Card solRoom = roomDeck.get(rand.nextInt(10));
+		Card solRoom = roomDeck.get(rand.nextInt(9));
 		Card solWeapon = weaponDeck.get(rand.nextInt(6));
 		
 		deck.remove(solWeapon);
