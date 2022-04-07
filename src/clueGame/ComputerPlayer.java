@@ -38,6 +38,9 @@ public class ComputerPlayer extends Player {
 		return suggestion;
 	}
 	
+	/*
+	 * Maybe refactor to just be selectTarget
+	 */
 	public void move(int pathLength) {
 		Board board = Board.getInstance();
 		board.calcTargets(board.getCell(this.getRow(), this.getColumn()), pathLength);

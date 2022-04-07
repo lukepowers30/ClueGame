@@ -74,6 +74,10 @@ public abstract class Player {
 		
 	}
 	
+	public Color getColor() {
+		return color;
+	}
+
 	public void updateSeen(Card card) {
 		seen.add(card);
 	}
