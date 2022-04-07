@@ -29,9 +29,9 @@ public class CardPanel extends JPanel {
 
 	private void creatWeaponPanel() {
 		weaponPanel = new JPanel();
-		JPanel hand = createHandPanel(peoplePanel, CardType.WEAPON);
-		JPanel seen = createSeenPanel(peoplePanel, CardType.WEAPON);
-		weaponPanel.setBorder(new TitledBorder (new EtchedBorder(), "Rooms"));
+		JPanel hand = createHandPanel(CardType.WEAPON);
+		JPanel seen = createSeenPanel(CardType.WEAPON);
+		weaponPanel.setBorder(new TitledBorder (new EtchedBorder(), "Weapons"));
 		weaponPanel.setLayout(new GridLayout(2,1));
 		weaponPanel.add(hand);
 		weaponPanel.add(seen);
@@ -41,8 +41,8 @@ public class CardPanel extends JPanel {
 
 	private void creatRoomPanel() {
 		roomPanel = new JPanel();
-		JPanel hand = createHandPanel(peoplePanel, CardType.ROOM);
-		JPanel seen = createSeenPanel(peoplePanel, CardType.ROOM);
+		JPanel hand = createHandPanel(CardType.ROOM);
+		JPanel seen = createSeenPanel(CardType.ROOM);
 		roomPanel.setBorder(new TitledBorder (new EtchedBorder(), "Rooms"));
 		roomPanel.setLayout(new GridLayout(2,1));
 		roomPanel.add(hand);
@@ -53,8 +53,8 @@ public class CardPanel extends JPanel {
 
 	private void creatPeoplePanel() {
 		peoplePanel = new JPanel();
-		JPanel hand = createHandPanel(peoplePanel, CardType.CHARACTER);
-		JPanel seen = createSeenPanel(peoplePanel, CardType.CHARACTER);
+		JPanel hand = createHandPanel(CardType.CHARACTER);
+		JPanel seen = createSeenPanel(CardType.CHARACTER);
 		peoplePanel.setBorder(new TitledBorder (new EtchedBorder(), "People"));
 		peoplePanel.setLayout(new GridLayout(2,1));
 		peoplePanel.add(hand);
@@ -63,7 +63,7 @@ public class CardPanel extends JPanel {
 		this.add(peoplePanel);
 	}
 
-	private JPanel createSeenPanel(JPanel panel, CardType type) {
+	private JPanel createSeenPanel(CardType type) {
 		JPanel seen = new JPanel();
 		seen.setLayout(new GridLayout(0,1));
 		JLabel label = new JLabel("Seen:");
@@ -79,7 +79,7 @@ public class CardPanel extends JPanel {
 		return seen;
 	}
 
-	private JPanel createHandPanel(JPanel panel, CardType type) {
+	private JPanel createHandPanel(CardType type) {
 		JPanel hand = new JPanel();
 		hand.setLayout(new GridLayout(0,1));
 		JLabel label = new JLabel("In Hand:");
@@ -97,10 +97,10 @@ public class CardPanel extends JPanel {
 	
 	public void updatePanel() {
 		this.removeAll();
-		setLayout(new GridLayout(3,1));
 		creatPeoplePanel();
 		creatRoomPanel();
 		creatWeaponPanel();
+		this.revalidate();
 	}
 
 	public static void main(String[] args) {
