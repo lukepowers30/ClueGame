@@ -41,16 +41,16 @@ class ComputerAITest {
 		
 		
 		// Adding cards to seen
-		test.updateSeen(new Card("George", CardType.CHARACTER));
-		test.updateSeen(new Card("Bob", CardType.CHARACTER));
-		test.updateSeen(new Card("Joe", CardType.CHARACTER));
+		test.updateSeen(new Card("George", CardType.CHARACTER), new ComputerPlayer("George", Color.BLACK, 0, 0));
+		test.updateSeen(new Card("Bob", CardType.CHARACTER), new ComputerPlayer("George", Color.BLACK, 0, 0));
+		test.updateSeen(new Card("Joe", CardType.CHARACTER), new ComputerPlayer("George", Color.BLACK, 0, 0));
 		int counterJane = 0;
 		int counterMichael = 0;
 		int counterSally = 0;
 		
-		test.updateSeen(new Card("Revolver", CardType.WEAPON));
-		test.updateSeen(new Card("Dagger", CardType.WEAPON));
-		test.updateSeen(new Card("Lead Pipe", CardType.WEAPON));
+		test.updateSeen(new Card("Revolver", CardType.WEAPON), new ComputerPlayer("George", Color.BLACK, 0, 0));
+		test.updateSeen(new Card("Dagger", CardType.WEAPON), new ComputerPlayer("George", Color.BLACK, 0, 0));
+		test.updateSeen(new Card("Lead Pipe", CardType.WEAPON), new ComputerPlayer("George", Color.BLACK, 0, 0));
 		int counterRope = 0;
 		int counterCandleStick = 0;
 		int counterWrench = 0;
@@ -81,10 +81,10 @@ class ComputerAITest {
 		assertTrue(counterWrench > 1);
 		
 		// Only one weapon and person not seen
-		test.updateSeen(new Card("Jane", CardType.CHARACTER));
-		test.updateSeen(new Card("Michael", CardType.CHARACTER));
-		test.updateSeen(new Card("Rope", CardType.WEAPON));
-		test.updateSeen(new Card("Candlestick", CardType.WEAPON));
+		test.updateSeen(new Card("Jane", CardType.CHARACTER), new ComputerPlayer("George", Color.BLACK, 0, 0));
+		test.updateSeen(new Card("Michael", CardType.CHARACTER), new ComputerPlayer("George", Color.BLACK, 0, 0));
+		test.updateSeen(new Card("Rope", CardType.WEAPON), new ComputerPlayer("George", Color.BLACK, 0, 0));
+		test.updateSeen(new Card("Candlestick", CardType.WEAPON), new ComputerPlayer("George", Color.BLACK, 0, 0));
 		
 		Solution sol3 = test.makeSuggestion(board.getRoom('K'));
 		assertEquals("Sally", sol3.getPerson().getCardName());
@@ -121,7 +121,7 @@ class ComputerAITest {
 		assertTrue(counter171 > 0);
 		
 		ComputerPlayer test3 = new ComputerPlayer("test", Color.black, 4, 19);
-		test3.updateSeen(new Card("Mud Room", CardType.ROOM));
+		test3.updateSeen(new Card("Mud Room", CardType.ROOM), new ComputerPlayer("George", Color.BLACK, 0, 0));
 		
 		int counter418 = 0;
 		int counter519 = 0;
@@ -129,7 +129,7 @@ class ComputerAITest {
 		int counter224 = 0;
 		for(int i = 0; i < 100; i++) {
 			test3 = new ComputerPlayer("test", Color.black, 4, 19);
-			test3.updateSeen(new Card("Mud Room", CardType.ROOM));
+			test3.updateSeen(new Card("Mud Room", CardType.ROOM), new ComputerPlayer("George", Color.BLACK, 0, 0));
 			test3.move(1);
 			if(test3.getRow() == 4 && test3.getColumn() == 18) {
 				counter418++;

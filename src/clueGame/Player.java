@@ -1,7 +1,10 @@
 package clueGame;
 import java.awt.Color;
+import java.awt.Graphics;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
@@ -10,7 +13,7 @@ public abstract class Player {
 	private Color color;
 	private int row, column;
 	private Set<Card> hand;
-	protected Set<Card> seen;
+	protected Map<Card, Player> seen;
 	
 	public String getName () {
 		return name;
@@ -31,7 +34,7 @@ public abstract class Player {
 		this.row = row;
 		this.column = column;
 		this.hand = new HashSet<Card>();
-		this.seen = new HashSet<Card>();
+		this.seen = new HashMap<Card, Player>();
 	}
 	
 	
@@ -60,8 +63,8 @@ public abstract class Player {
 	}
 	
 	public boolean seenOrHandContainsName(String name) {
-		for (Card c: seen) {
-			if (c.getCardName().equals(name)) {
+		for (Map.Entry<Card, Player> entry: seen.entrySet()) {
+			if (entry.getKey().getCardName().equals(name)) {
 				return true;
 			}
 		}
@@ -71,15 +74,21 @@ public abstract class Player {
 			}
 		}
 		return false;
-		
+	}
+	
+	public void drawPlayer(int cellWidth, int cellHeight, Graphics g) {
+		g.setColor(color);
+		g.fillOval(column * cellWidth, row * cellHeight, cellWidth, cellHeight);
+		g.setColor(Color.black);
+		g.drawOval(column * cellWidth, row * cellHeight, cellWidth, cellHeight);
 	}
 	
 	public Color getColor() {
 		return color;
 	}
 
-	public void updateSeen(Card card) {
-		seen.add(card);
+	public void updateSeen(Card card, Player player) {
+		seen.put(card, player);
 	}
 
 	public int getRow() {
@@ -103,7 +112,7 @@ public abstract class Player {
 		return board.getRoom(board.getCell(row, column));
 	}
 
-	public Set<Card> getSeen() {
+	public Map<Card, Player> getSeen() {
 		return seen;
 	}
 	

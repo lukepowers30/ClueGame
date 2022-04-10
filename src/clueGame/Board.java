@@ -2,6 +2,7 @@ package clueGame;
 
 import java.util.HashSet;
 import java.awt.Color;
+import java.awt.Graphics;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -12,9 +13,11 @@ import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeSet;
 
+import javax.swing.JPanel;
+
 import experiment.TestBoardCell;
 
-public class Board {
+public class Board extends JPanel{
 
 	private BoardCell[][] grid;
 	private int numRows;
@@ -35,7 +38,7 @@ public class Board {
 	private static Board theInstance = new Board();
 	// constructor is private to ensure only one can be created
 	private Board() {
-		super() ;
+		super();
 		this.targets = new HashSet<BoardCell>();
 		this.visited = new HashSet<BoardCell>();
 		this.roomMap = new HashMap<Character, Room>();
@@ -141,15 +144,15 @@ public class Board {
 				if (line[3].equals("green")) {
 					color = Color.green;
 				}else if (line[3].equals("blue")) {
-					color = Color.blue;
+					color = Color.cyan;
 				}else if (line[3].equals("magenta")) {
 					color = Color.magenta;
 				}else if (line[3].equals("orange")) {
 					color = Color.orange;
 				}else if (line[3].equals("red")) {
 					color = Color.red;
-				}else if (line[3].equals("yellow")) {
-					color = Color.yellow;
+				}else if (line[3].equals("white")) {
+					color = Color.white;
 				}
 				if (line[1].equals("Human")) {
 					
@@ -399,6 +402,28 @@ public class Board {
 			index = (index + 1) % players.size();
 		}while(index != stop);
 		return null;
+	}
+	
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		int cellWidth = super.getWidth() / this.numColumns;
+		int cellHeight = super.getHeight() / this.numRows;
+		for (BoardCell[] row: grid) {
+			for(BoardCell cell: row) {
+				cell.draw(cellWidth, cellHeight, g);
+			}
+		}
+		for (BoardCell[] row: grid) {
+			for(BoardCell cell: row) {
+				cell.drawDoorways(cellWidth, cellHeight, g);
+			}
+		}
+		for(Map.Entry<Character, Room> entry: this.roomMap.entrySet()) {
+			entry.getValue().drawRoomName(cellWidth, cellHeight, g);
+		}
+		for(Player p: players) {
+			p.drawPlayer(cellWidth, cellHeight, g);
+		}
 	}
 	
 	

@@ -1,5 +1,7 @@
 package clueGame;
 
+import java.awt.Color;
+import java.awt.Graphics;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -129,6 +131,41 @@ public class BoardCell {
 		return col;
 	}
 	
+	public void draw(int cellWidth, int cellHeight, Graphics g) {
+		if(isRoom) {
+			g.setColor(Color.gray);
+			g.fillRect(cellWidth * this.col, cellHeight * this.row, cellWidth, cellHeight);
+		}else if (this.initial == 'X'){
+			g.setColor(Color.black);
+			g.fillRect(cellWidth * this.col, cellHeight * this.row, cellWidth, cellHeight);
+		}else {
+			g.setColor(Color.yellow);
+			g.fillRect(cellWidth * this.col, cellHeight * this.row, cellWidth, cellHeight);
+			g.setColor(Color.black);
+			g.drawRect(cellWidth * this.col, cellHeight * this.row, cellWidth, cellHeight);
+		}
+		
+	}
 	
+	public void drawDoorways(int cellWidth, int cellHeight, Graphics g) {
+		
+		g.setColor(Color.blue);
+		switch(this.doorDirection) {
+		case RIGHT:
+			g.fillRect(cellWidth * (this.col + 1), cellHeight * this.row, (int) (cellWidth * 0.1), cellHeight);
+			break;
+		case LEFT:
+			g.fillRect((int) (cellWidth * this.col - (0.1 * cellWidth)), cellHeight * this.row, (int) (cellWidth * 0.1), cellHeight);
+			break;
+		case UP:
+			g.fillRect(cellWidth * this.col, (int) (cellHeight * this.row - (0.1 * cellHeight)), cellWidth, (int) (cellHeight * 0.1));
+			break;
+		case DOWN:
+			g.fillRect(cellWidth * this.col, cellHeight * (this.row + 1), cellWidth, (int) (cellHeight * 0.1));
+			break;
+		default:
+			break;
+		}
+	}
 	
 }
