@@ -17,7 +17,7 @@ Player, Computer, Bob, blue, 8, 0
 Player, Computer, Joe, magenta, 0, 9
 Player, Computer, Jane, orange, 0, 17
 Player, Computer, Michael, red, 7, 30
-Player, Computer, Sally, yellow, 20, 27
+Player, Computer, Sally, white, 20, 27
 // weapons
 Weapon, Revolver
 Weapon, Dagger

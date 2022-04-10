@@ -47,7 +47,8 @@ public class GameControlPanel extends JPanel {
 		turnPanel.add(turnQuestion, BorderLayout.NORTH);
 		turnPanel.add(turnName, BorderLayout.CENTER);
 		rollPanel.add(rollLabel, BorderLayout.WEST);
-		rollPanel.add(rollValue, BorderLayout.CENTER);
+		rollPanel.add(rollValue, BorderLayout.EAST);
+		
 		
 		
 		
