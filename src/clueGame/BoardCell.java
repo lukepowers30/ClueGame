@@ -148,20 +148,21 @@ public class BoardCell {
 	}
 	
 	public void drawDoorways(int cellWidth, int cellHeight, Graphics g) {
-		
+		int doorWidth = (int) (0.1 * cellWidth);
+				
 		g.setColor(Color.blue);
 		switch(this.doorDirection) {
 		case RIGHT:
-			g.fillRect(cellWidth * (this.col + 1), cellHeight * this.row, (int) (cellWidth * 0.1), cellHeight);
+			g.fillRect(cellWidth * (this.col + 1), cellHeight * this.row, doorWidth, cellHeight);
 			break;
 		case LEFT:
-			g.fillRect((int) (cellWidth * this.col - (0.1 * cellWidth)), cellHeight * this.row, (int) (cellWidth * 0.1), cellHeight);
+			g.fillRect(cellWidth * this.col - doorWidth, cellHeight * this.row, doorWidth, cellHeight);
 			break;
 		case UP:
-			g.fillRect(cellWidth * this.col, (int) (cellHeight * this.row - (0.1 * cellHeight)), cellWidth, (int) (cellHeight * 0.1));
+			g.fillRect(cellWidth * this.col, cellHeight * this.row - doorWidth, cellWidth, doorWidth);
 			break;
 		case DOWN:
-			g.fillRect(cellWidth * this.col, cellHeight * (this.row + 1), cellWidth, (int) (cellHeight * 0.1));
+			g.fillRect(cellWidth * this.col, cellHeight * (this.row + 1), cellWidth, doorWidth);
 			break;
 		default:
 			break;
