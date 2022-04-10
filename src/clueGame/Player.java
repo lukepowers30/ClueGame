@@ -1,5 +1,6 @@
 package clueGame;
 import java.awt.Color;
+import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -73,7 +74,13 @@ public abstract class Player {
 			}
 		}
 		return false;
-		
+	}
+	
+	public void drawPlayer(int cellWidth, int cellHeight, Graphics g) {
+		g.setColor(color);
+		g.fillOval(column * cellWidth, row * cellHeight, cellWidth, cellHeight);
+		g.setColor(Color.black);
+		g.drawOval(column * cellWidth, row * cellHeight, cellWidth, cellHeight);
 	}
 	
 	public Color getColor() {
