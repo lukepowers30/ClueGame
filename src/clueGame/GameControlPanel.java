@@ -3,6 +3,8 @@ package clueGame;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -79,8 +81,26 @@ public class GameControlPanel extends JPanel {
 		lowerPanel.add(guessPanel);
 		lowerPanel.add(resultPanel);
 		add(lowerPanel);
+		ButtonListener buttonListener = new ButtonListener();
+		nextButton.addActionListener(buttonListener);
+		accusationButton.addActionListener(buttonListener);
 		
 		
+		
+	}
+	
+	private class ButtonListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (e.getSource() == accusationButton) {
+				
+			} else if (e.getSource() == nextButton) {
+				
+				
+			}
+			
+		}
 		
 	}
 	

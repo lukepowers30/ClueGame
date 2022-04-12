@@ -22,6 +22,7 @@ public class CardPanel extends JPanel {
 	public CardPanel() {
 		super();
 		setLayout(new GridLayout(3,1));
+		setBorder(new TitledBorder (new EtchedBorder(), "Known Cards"));
 		creatPeoplePanel();
 		creatRoomPanel();
 		creatWeaponPanel();
