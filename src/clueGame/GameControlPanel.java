@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
@@ -23,6 +24,20 @@ public class GameControlPanel extends JPanel {
 	private JButton accusationButton;
 	private JButton nextButton;
 	
+	private static int diceRoll;
+	
+
+	public static int getDiceRoll() {
+		return diceRoll;
+	}
+
+
+
+	public static void setDiceRoll(int diceRoll) {
+		diceRoll = diceRoll;
+	}
+
+
 
 	/**
 	 * Constructor for the panel, it does 90% of the work
@@ -93,10 +108,22 @@ public class GameControlPanel extends JPanel {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			Board board = Board.getInstance();
 			if (e.getSource() == accusationButton) {
 				
 			} else if (e.getSource() == nextButton) {
-				
+				Player currentPlayer = board.getPlayers().get(board.getCurrentPlayer());
+				if (currentPlayer instanceof HumanPlayer) {
+					if (((HumanPlayer) currentPlayer).isHasMoved()) {
+						board.goToNextPlayer();
+					} else {
+						JOptionPane error = new JOptionPane();
+						error.showMessageDialog(board, "Cannot go to next player. Finish your turn.");
+						return;
+					}
+				} else {
+					board.goToNextPlayer();
+				}
 				
 			}
 			

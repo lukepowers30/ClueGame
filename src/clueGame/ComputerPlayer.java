@@ -57,6 +57,7 @@ public class ComputerPlayer extends Player {
 		BoardCell destination = (BoardCell) arr[rand.nextInt(arr.length)];
 		this.setRow(destination.getRow());
 		this.setColumn(destination.getCol());
+		Board.getInstance().getTargets().clear();
 	}
 
 }

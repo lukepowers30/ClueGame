@@ -131,15 +131,26 @@ public class BoardCell {
 		return col;
 	}
 	
-	public void draw(int cellWidth, int cellHeight, Graphics g) {
+	
+	
+	public void draw(int cellWidth, int cellHeight, Graphics g, boolean isTarget) {
 		if(isRoom) {
-			g.setColor(Color.gray);
+			if (Board.getInstance().getTargets().contains(Board.getInstance().getRoom(this).getCenterCell())) {
+				g.setColor(Color.pink);
+			} else {
+				g.setColor(Color.gray);
+			}
+			
 			g.fillRect(cellWidth * this.col, cellHeight * this.row, cellWidth, cellHeight);
 		}else if (this.initial == 'X'){
 			g.setColor(Color.black);
 			g.fillRect(cellWidth * this.col, cellHeight * this.row, cellWidth, cellHeight);
 		}else {
-			g.setColor(Color.yellow);
+			if (isTarget) {
+				g.setColor(Color.pink);
+			} else {
+				g.setColor(Color.yellow);
+			}
 			g.fillRect(cellWidth * this.col, cellHeight * this.row, cellWidth, cellHeight);
 			g.setColor(Color.black);
 			g.drawRect(cellWidth * this.col, cellHeight * this.row, cellWidth, cellHeight);

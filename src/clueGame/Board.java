@@ -30,7 +30,16 @@ public class Board extends JPanel{
 	private Set<Card> deck;
 	private Solution theAnswer;
 	private ArrayList<Player> players;
+	private int currentPlayer;
 	
+	
+
+	public int getCurrentPlayer() {
+		return currentPlayer;
+	}
+	public void setCurrentPlayer(int currentPlayer) {
+		this.currentPlayer = currentPlayer;
+	}
 
 	/*
 	 * variable and methods used for singleton pattern
@@ -410,8 +419,11 @@ public class Board extends JPanel{
 		int cellHeight = super.getHeight() / this.numRows;
 		for (BoardCell[] row: grid) {
 			for(BoardCell cell: row) {
-				cell.draw(cellWidth, cellHeight, g);
+				cell.draw(cellWidth, cellHeight, g, false);
 			}
+		}
+		for (BoardCell cell: targets) {
+			cell.draw(cellWidth, cellHeight, g, true);
 		}
 		for (BoardCell[] row: grid) {
 			for(BoardCell cell: row) {
@@ -446,6 +458,24 @@ public class Board extends JPanel{
 	public void setPlayers(ArrayList<Player>  players) {
 		this.players = players;
 	}
+	public void goToNextPlayer() {
+		currentPlayer = (currentPlayer + 1) % 6;
+		Player currentPlayer = players.get(this.currentPlayer);
+		int roll = rollDice();
+		if (currentPlayer instanceof HumanPlayer) {
+			calcTargets(grid[currentPlayer.getRow()][currentPlayer.getColumn()], roll);
+			
+		}
+		
+	}
+	
+	public static int rollDice() {
+		Random rand = new Random();
+		int roll = rand.nextInt(6)+1;
+		GameControlPanel.setDiceRoll(roll);
+		return roll;
+	}
+
 
 	
 
