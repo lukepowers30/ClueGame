@@ -464,7 +464,7 @@ public class Board extends JPanel{
 		int roll = rollDice();
 		if (currentPlayer instanceof HumanPlayer) {
 			calcTargets(grid[currentPlayer.getRow()][currentPlayer.getColumn()], roll);
-			
+			repaint();
 		}
 		
 	}

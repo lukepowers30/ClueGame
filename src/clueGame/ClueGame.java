@@ -40,12 +40,7 @@ public class ClueGame extends JFrame {
 		
 		
 	}
+
 	
-	//private class implements MouseListener
-	
-	public static int rollDice() {
-		Random rand = new Random();
-		return rand.nextInt(6)+1;
-	}
 
 }
