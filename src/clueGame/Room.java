@@ -3,15 +3,30 @@ package clueGame;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.util.ArrayList;
 
 public class Room {
 	private String name;
 	private BoardCell centerCell;
 	private BoardCell labelCell;
+	private ArrayList<Player> occupied;
 	
 	public Room(String name) {
 		super();
 		this.name = name;
+		occupied = new ArrayList<Player>();
+	}
+	
+	public void addPlayer(Player p) {
+		occupied.add(p);
+	}
+	
+	public void removePlayer(Player p) {
+		occupied.remove(p);
+	}
+
+	public ArrayList<Player> getOccupied() {
+		return occupied;
 	}
 
 	public String getName() {

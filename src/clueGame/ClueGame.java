@@ -10,6 +10,19 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 public class ClueGame extends JFrame {
+	
+	private CardPanel cardPanel;
+	private GameControlPanel gcPanel;
+	
+	
+
+	public CardPanel getCardPanel() {
+		return cardPanel;
+	}
+
+	public GameControlPanel getGcPanel() {
+		return gcPanel;
+	}
 
 	public ClueGame(Board boardPanel) throws HeadlessException {
 		super();
@@ -19,9 +32,8 @@ public class ClueGame extends JFrame {
 		this.setTitle("Clue Game");
 		this.setLayout(new BorderLayout());
 		//boardPanel.getPlayers().get(0).updateSeen(new Card("Really long name card", CardType.CHARACTER), boardPanel.getPlayers().get(1));
-		CardPanel cardPanel = new CardPanel();
-		
-		GameControlPanel gcPanel = new GameControlPanel();
+		cardPanel = new CardPanel();
+		gcPanel = new GameControlPanel();
 		this.add(boardPanel, BorderLayout.CENTER);
 		this.add(cardPanel, BorderLayout.EAST);
 		this.add(gcPanel, BorderLayout.SOUTH);
@@ -33,14 +45,15 @@ public class ClueGame extends JFrame {
 		Board board = Board.getInstance();
 		board.setConfigFiles("ClueLayout.csv", "ClueSetup.txt");
 		board.initialize();
+		((ComputerPlayer)board.getPlayers().get(1)).setRow(17);
+		((ComputerPlayer)board.getPlayers().get(1)).setColumn(1);
+		board.getCell(17, 1).setOccupied(true);
 		ClueGame clueGame = new ClueGame(board);
 		JOptionPane startMessage = new JOptionPane();
 		startMessage.showMessageDialog(clueGame, "You are George! \n Can you find the Solution before the Computer players?");
-		
-		
-		
+		clueGame.getGcPanel().updatePanel();
+
 	}
 
-	
 
 }

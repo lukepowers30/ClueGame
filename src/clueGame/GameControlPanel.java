@@ -33,8 +33,8 @@ public class GameControlPanel extends JPanel {
 
 
 
-	public static void setDiceRoll(int diceRoll) {
-		diceRoll = diceRoll;
+	public static void setDiceRoll(int roll) {
+		diceRoll = roll;
 	}
 
 
@@ -112,21 +112,20 @@ public class GameControlPanel extends JPanel {
 			if (e.getSource() == accusationButton) {
 				
 			} else if (e.getSource() == nextButton) {
-				Player currentPlayer = board.getPlayers().get(board.getCurrentPlayer());
+				Player currentPlayer = board.getPlayers().get(board.getCurrentPlayerIndex());
 				if (currentPlayer instanceof HumanPlayer) {
 					if (((HumanPlayer) currentPlayer).isHasMoved()) {
 						board.goToNextPlayer();
 					} else {
 						JOptionPane error = new JOptionPane();
 						error.showMessageDialog(board, "Cannot go to next player. Finish your turn.");
-						return;
 					}
 				} else {
 					board.goToNextPlayer();
 				}
 				
 			}
-			
+			updatePanel();
 		}
 		
 	}
@@ -171,6 +170,13 @@ public class GameControlPanel extends JPanel {
 		turnName.setBackground(computerPlayer.getColor());
 		rollValue.setText(Integer.toString(i));
 		
+	}
+	
+	public void updatePanel() {
+		turnName.setText(Board.getInstance().getPlayers().get(Board.getInstance().getCurrentPlayerIndex()).getName());
+		turnName.setBackground(Board.getInstance().getPlayers().get(Board.getInstance().getCurrentPlayerIndex()).getColor());
+		rollValue.setText(Integer.toString(diceRoll));
+		revalidate();
 	}
 	
 }

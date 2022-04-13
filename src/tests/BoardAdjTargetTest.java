@@ -282,6 +282,14 @@ public class BoardAdjTargetTest {
 		Set<BoardCell> targets = board.getTargets();
 		assertEquals(1, targets.size());
 		assertTrue(targets.contains(board.getCell(17, 4)));
+		
+		
+		// Tests when there are no available moves
+		board.getCell(18, 1).setOccupied(true);
+		board.calcTargets(board.getCell(18, 0), 2);
+		targets = board.getTargets();
+		board.getCell(18, 1).setOccupied(false);
+		assertTrue(targets.isEmpty());
 
 	
 		// we want to make sure we can get into a room, even if flagged as occupied
@@ -303,6 +311,7 @@ public class BoardAdjTargetTest {
 		assertTrue(targets.contains(board.getCell(15, 21)));
 		assertTrue(targets.contains(board.getCell(16, 20)));	
 		assertTrue(targets.contains(board.getCell(13, 25)));
-
+		assertFalse(targets.contains(board.getCell(17, 21)));
+		assertFalse(targets.contains(board.getCell(16, 21)));
 	}
 }

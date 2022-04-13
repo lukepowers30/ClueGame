@@ -45,19 +45,31 @@ public class ComputerPlayer extends Player {
 		Board board = Board.getInstance();
 		board.calcTargets(board.getCell(this.getRow(), this.getColumn()), pathLength);
 		Set<BoardCell> targets = board.getTargets();
+		if(board.getCell(this.getRow(), this.getColumn()).isRoom()) {
+			board.getRoom(board.getCell(this.getRow(), this.getColumn())).removePlayer(this);
+		}else {
+			board.getCell(this.getRow(), this.getColumn()).setOccupied(false);
+		}
 		for(BoardCell c: targets) {
 			if(c.isRoom() && !this.seenOrHandContainsName(board.getRoom(c).getName())) {
 				this.setRow(c.getRow());
 				this.setColumn(c.getCol());
+				Board.getInstance().getTargets().clear();
+				board.getRoom(c).addPlayer(this);
 				return;
 			}
 		}
 		Object[] arr = targets.toArray();
 		Random rand = new Random();
 		BoardCell destination = (BoardCell) arr[rand.nextInt(arr.length)];
+		destination.setOccupied(true);
 		this.setRow(destination.getRow());
 		this.setColumn(destination.getCol());
 		Board.getInstance().getTargets().clear();
+	}
+	
+	public void makeAccusation() {
+		
 	}
 
 }
