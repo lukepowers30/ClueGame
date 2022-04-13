@@ -83,6 +83,13 @@ public abstract class Player {
 		g.drawOval(column * cellWidth, row * cellHeight, cellWidth, cellHeight);
 	}
 	
+	public void drawPlayerInRoom(int cellWidth, int cellHeight, Graphics g, int offset) {
+		g.setColor(color);
+		g.fillOval((int)((column + offset * 0.5) * cellWidth), row * cellHeight, cellWidth, cellHeight);
+		g.setColor(Color.black);
+		g.drawOval((int)((column + offset * 0.5) * cellWidth), row * cellHeight, cellWidth, cellHeight);
+	}
+	
 	public Color getColor() {
 		return color;
 	}

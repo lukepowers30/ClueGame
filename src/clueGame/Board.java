@@ -3,6 +3,8 @@ package clueGame;
 import java.util.HashSet;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -13,6 +15,7 @@ import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeSet;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import experiment.TestBoardCell;
@@ -30,15 +33,15 @@ public class Board extends JPanel{
 	private Set<Card> deck;
 	private Solution theAnswer;
 	private ArrayList<Player> players;
-	private int currentPlayer;
+	private int currentPlayerIndex;
 	
 	
 
-	public int getCurrentPlayer() {
-		return currentPlayer;
+	public int getCurrentPlayerIndex() {
+		return currentPlayerIndex;
 	}
-	public void setCurrentPlayer(int currentPlayer) {
-		this.currentPlayer = currentPlayer;
+	public void setCurrentPlayerIndex(int currentPlayer) {
+		this.currentPlayerIndex = currentPlayer;
 	}
 
 	/*
@@ -54,6 +57,8 @@ public class Board extends JPanel{
 		
 		this.deck = new HashSet<Card>();
 		this.players = new ArrayList<Player>();
+		
+		this.addMouseListener(new BoardListener());
 	}
 	// this method returns the only instance of Board (since we are using singleton pattern)
 	public static Board getInstance() {
@@ -72,6 +77,11 @@ public class Board extends JPanel{
 		calcAdjacencies();
 		makeSolution();
 		dealRemainingCards();
+		currentPlayerIndex = 0;
+		Player currentPlayer = players.get(this.currentPlayerIndex);
+		int roll = rollDice();
+		calcTargets(grid[currentPlayer.getRow()][currentPlayer.getColumn()], roll);
+		((HumanPlayer) currentPlayer).setHasMoved(false);
 	}
 	
 
@@ -350,6 +360,7 @@ public class Board extends JPanel{
 			visited.remove(c);
 		}
 	}
+	
 	public Set<BoardCell> getTargets() {
 		return targets;
 	}
@@ -434,7 +445,18 @@ public class Board extends JPanel{
 			entry.getValue().drawRoomName(cellWidth, cellHeight, g);
 		}
 		for(Player p: players) {
-			p.drawPlayer(cellWidth, cellHeight, g);
+			if(getCell(p.getRow(), p.getColumn()).isRoom()) {
+				continue;
+			}else {
+				p.drawPlayer(cellWidth, cellHeight, g);
+			}
+		}
+		for(Map.Entry<Character, Room> entry: this.roomMap.entrySet()) {
+			int counter = 0;
+			for(Player p: entry.getValue().getOccupied()) {
+				p.drawPlayerInRoom(cellWidth, cellHeight, g, counter);
+				counter++;
+			}
 		}
 	}
 	
@@ -458,13 +480,28 @@ public class Board extends JPanel{
 	public void setPlayers(ArrayList<Player>  players) {
 		this.players = players;
 	}
+	
 	public void goToNextPlayer() {
-		currentPlayer = (currentPlayer + 1) % 6;
-		Player currentPlayer = players.get(this.currentPlayer);
+		currentPlayerIndex = (currentPlayerIndex + 1) % 6;
+		Player currentPlayer = players.get(this.currentPlayerIndex);
 		int roll = rollDice();
 		if (currentPlayer instanceof HumanPlayer) {
 			calcTargets(grid[currentPlayer.getRow()][currentPlayer.getColumn()], roll);
-			
+			if(targets.isEmpty()) {
+				JOptionPane noMoves = new JOptionPane();
+				noMoves.showMessageDialog(this, "You have no possible moves.");
+			}else {
+				((HumanPlayer) currentPlayer).setHasMoved(false);
+				this.repaint();
+			}
+		}else {
+			calcTargets(grid[currentPlayer.getRow()][currentPlayer.getColumn()], roll);
+			((ComputerPlayer) currentPlayer).makeAccusation();
+			((ComputerPlayer) currentPlayer).move(roll);
+			repaint();
+			if(grid[currentPlayer.getRow()][currentPlayer.getColumn()].isRoomCenter()) {
+				((ComputerPlayer) currentPlayer).makeSuggestion(this.getRoom(grid[currentPlayer.getRow()][currentPlayer.getColumn()]));
+			}
 		}
 		
 	}
@@ -477,6 +514,59 @@ public class Board extends JPanel{
 	}
 
 
-	
+	private class BoardListener implements MouseListener{
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			if(currentPlayerIndex != 0) {
+				return;
+			}else {
+				int cellWidth = Board.super.getWidth() / Board.getInstance().numColumns;
+				int cellHeight = Board.super.getHeight() / Board.getInstance().numRows;
+				int column = e.getX() / cellWidth;
+				int row = e.getY() / cellHeight;
+				BoardCell clickedCell = getCell(row, column);
+				if(targets.contains(clickedCell) || clickedCell.isRoom() && targets.contains(getRoom(clickedCell).getCenterCell())) {
+					if(clickedCell.isRoom()) {
+						((HumanPlayer) players.get(0)).move(getRoom(clickedCell).getCenterCell());
+					}else {
+						((HumanPlayer) players.get(0)).move(getCell(row, column));
+					}
+					repaint();
+					((HumanPlayer) players.get(0)).setHasMoved(true);
+					((HumanPlayer) players.get(0)).makeSuggestion();
+				}else {
+					JOptionPane error = new JOptionPane();
+					error.showMessageDialog(Board.getInstance(), "That is not a Target.");
+				}
+			}
+			
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	}
 
 }

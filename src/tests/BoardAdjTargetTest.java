@@ -303,6 +303,7 @@ public class BoardAdjTargetTest {
 		assertTrue(targets.contains(board.getCell(15, 21)));
 		assertTrue(targets.contains(board.getCell(16, 20)));	
 		assertTrue(targets.contains(board.getCell(13, 25)));
-
+		assertFalse(targets.contains(board.getCell(17, 21)));
+		assertFalse(targets.contains(board.getCell(16, 21)));
 	}
 }
