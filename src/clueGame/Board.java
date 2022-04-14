@@ -417,6 +417,7 @@ public class Board extends JPanel{
 		do {
 			disprove = players.get(index).disproveSuggestion(suggestion);
 			if(disprove != null) {
+				caller.updateSeen(disprove, players.get(index));
 				return disprove;
 			}
 			index = (index + 1) % players.size();
