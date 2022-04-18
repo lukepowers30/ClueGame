@@ -140,7 +140,6 @@ public class BoardCell {
 			} else {
 				g.setColor(Color.gray);
 			}
-			
 			g.fillRect(cellWidth * this.col, cellHeight * this.row, cellWidth, cellHeight);
 		}else if (this.initial == 'X'){
 			g.setColor(Color.black);

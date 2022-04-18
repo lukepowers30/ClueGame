@@ -537,15 +537,16 @@ public class Board extends JPanel{
 				int column = e.getX() / cellWidth;
 				int row = e.getY() / cellHeight;								// getting the cell that was clicked on
 				BoardCell clickedCell = getCell(row, column);
+				HumanPlayer human = (HumanPlayer) players.get(0);
 				if(targets.contains(clickedCell) || clickedCell.isRoom() && targets.contains(getRoom(clickedCell).getCenterCell())) {
 					if(clickedCell.isRoom()) {
-						((HumanPlayer) players.get(0)).move(getRoom(clickedCell).getCenterCell());
+						human.move(getRoom(clickedCell).getCenterCell());
 					}else {
-						((HumanPlayer) players.get(0)).move(getCell(row, column));
+						human.move(getCell(row, column));
 					}
 					repaint();
-					((HumanPlayer) players.get(0)).setHasMoved(true);
-					((HumanPlayer) players.get(0)).makeSuggestion();
+					human.setHasMoved(true);
+					human.makeSuggestion();
 				}else {
 					JOptionPane error = new JOptionPane();
 					error.showMessageDialog(Board.getInstance(), "That is not a Target.");
