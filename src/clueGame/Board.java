@@ -429,52 +429,56 @@ public class Board extends JPanel{
 		return accusation.isEquals(theAnswer);
 	}
 	
-	
+	/*
+	 * Function to cycle through players and return a card that disproves a suggestion.
+	 */
 	public Card handleSuggestion(Solution suggestion, Player caller) {
 		int index = players.indexOf(caller);
 		int stop = index;
-		index++;
+		index++;						// go to the player after the player that made the suggestion
 		Card disprove;
 		do {
 			disprove = players.get(index).disproveSuggestion(suggestion);
-			if(disprove != null) {
+			if(disprove != null) {											// if disproved return the card and update seen
 				caller.updateSeen(disprove, players.get(index));
 				return disprove;
 			}
-			index = (index + 1) % players.size();
+			index = (index + 1) % players.size();					// iterate through players
 		}while(index != stop);
 		return null;
 	}
 	
-	
+	/*
+	 * paint the board panel
+	 */
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		int cellWidth = super.getWidth() / this.numColumns;
+		int cellWidth = super.getWidth() / this.numColumns;			// getting cell size to draw
 		int cellHeight = super.getHeight() / this.numRows;
 		for (BoardCell[] row: grid) {
 			for(BoardCell cell: row) {
-				cell.draw(cellWidth, cellHeight, g, false);
+				cell.draw(cellWidth, cellHeight, g, false);			// draw all cells
 			}
 		}
 		for (BoardCell cell: targets) {
-			cell.draw(cellWidth, cellHeight, g, true);
+			cell.draw(cellWidth, cellHeight, g, true);		// redraw the targets
 		}
 		for (BoardCell[] row: grid) {
 			for(BoardCell cell: row) {
-				cell.drawDoorways(cellWidth, cellHeight, g);
+				cell.drawDoorways(cellWidth, cellHeight, g);		 // draw the doorways
 			}
 		}
 		for(Map.Entry<Character, Room> entry: this.roomMap.entrySet()) {
-			entry.getValue().drawRoomName(cellWidth, cellHeight, g);
+			entry.getValue().drawRoomName(cellWidth, cellHeight, g);			// draw the room names
 		}
 		for(Player p: players) {
-			if(getCell(p.getRow(), p.getColumn()).isRoom()) {
+			if(getCell(p.getRow(), p.getColumn()).isRoom()) {				// draw the players
 				continue;
 			}else {
 				p.drawPlayer(cellWidth, cellHeight, g);
 			}
 		}
-		for(Map.Entry<Character, Room> entry: this.roomMap.entrySet()) {
+		for(Map.Entry<Character, Room> entry: this.roomMap.entrySet()) {		// draw players in rooms
 			int counter = 0;
 			for(Player p: entry.getValue().getOccupied()) {
 				p.drawPlayerInRoom(cellWidth, cellHeight, g, counter);
@@ -483,12 +487,14 @@ public class Board extends JPanel{
 		}
 	}
 	
-	
+	/*
+	 * handle the next players turn on the clicking of the next button
+	 */
 	public void goToNextPlayer() {
 		currentPlayerIndex = (currentPlayerIndex + 1) % 6;
 		Player currentPlayer = players.get(this.currentPlayerIndex);
 		int roll = rollDice();
-		if (currentPlayer instanceof HumanPlayer) {
+		if (currentPlayer instanceof HumanPlayer) {					// for human player calc targets and repaint
 			calcTargets(grid[currentPlayer.getRow()][currentPlayer.getColumn()], roll);
 			if(targets.isEmpty()) {
 				JOptionPane noMoves = new JOptionPane();
@@ -497,7 +503,7 @@ public class Board extends JPanel{
 				((HumanPlayer) currentPlayer).setHasMoved(false);
 				this.repaint();
 			}
-		}else {
+		}else {						// for computer player calc targets, make accuation if needed, move, and then make suggestion if needed
 			calcTargets(grid[currentPlayer.getRow()][currentPlayer.getColumn()], roll);
 			((ComputerPlayer) currentPlayer).makeAccusation();
 			((ComputerPlayer) currentPlayer).move(roll);
@@ -516,18 +522,20 @@ public class Board extends JPanel{
 		return roll;
 	}
 
-
+	/*
+	 * mouse listener for selecting the target the hman player moves to
+	 */
 	private class BoardListener implements MouseListener{
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			if(currentPlayerIndex != 0) {
+			if(currentPlayerIndex != 0) {		// if its not the human players turn, don't do anything
 				return;
 			}else {
 				int cellWidth = Board.super.getWidth() / Board.getInstance().numColumns;
 				int cellHeight = Board.super.getHeight() / Board.getInstance().numRows;
 				int column = e.getX() / cellWidth;
-				int row = e.getY() / cellHeight;
+				int row = e.getY() / cellHeight;								// getting the cell that was clicked on
 				BoardCell clickedCell = getCell(row, column);
 				if(targets.contains(clickedCell) || clickedCell.isRoom() && targets.contains(getRoom(clickedCell).getCenterCell())) {
 					if(clickedCell.isRoom()) {
