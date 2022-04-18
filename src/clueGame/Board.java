@@ -326,6 +326,30 @@ public class Board extends JPanel{
 		return grid[row][col];
 	}
 	
+	public Set<BoardCell> getTargets() {
+		return targets;
+	}
+	
+	public ArrayList<Player> getPlayers() {
+		return players;
+	}
+	
+	public Set<Card> getDeck() {
+		return deck;
+	}
+	
+	public Solution getSolution () {
+		return theAnswer;
+	}
+	
+	public void setTheAnswer(Solution theAnswer) {
+		this.theAnswer = theAnswer;
+	}
+	
+	public void setPlayers(ArrayList<Player>  players) {
+		this.players = players;
+	}
+	
 	/*
 	 * Calculates the possible move locations for a given starting cell and roll amount
 	 */
@@ -359,10 +383,6 @@ public class Board extends JPanel{
 			}
 			visited.remove(c);
 		}
-	}
-	
-	public Set<BoardCell> getTargets() {
-		return targets;
 	}
 
 	/*
@@ -409,6 +429,7 @@ public class Board extends JPanel{
 		return accusation.isEquals(theAnswer);
 	}
 	
+	
 	public Card handleSuggestion(Solution suggestion, Player caller) {
 		int index = players.indexOf(caller);
 		int stop = index;
@@ -424,6 +445,7 @@ public class Board extends JPanel{
 		}while(index != stop);
 		return null;
 	}
+	
 	
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -462,26 +484,6 @@ public class Board extends JPanel{
 	}
 	
 	
-	public ArrayList<Player> getPlayers() {
-		return players;
-	}
-	
-	public Set<Card> getDeck() {
-		return deck;
-	}
-	
-	public Solution getSolution () {
-		return theAnswer;
-	}
-	
-	public void setTheAnswer(Solution theAnswer) {
-		this.theAnswer = theAnswer;
-	}
-	
-	public void setPlayers(ArrayList<Player>  players) {
-		this.players = players;
-	}
-	
 	public void goToNextPlayer() {
 		currentPlayerIndex = (currentPlayerIndex + 1) % 6;
 		Player currentPlayer = players.get(this.currentPlayerIndex);
@@ -509,7 +511,7 @@ public class Board extends JPanel{
 	
 	public static int rollDice() {
 		Random rand = new Random();
-		int roll = rand.nextInt(6)+1;
+		int roll = rand.nextInt(6) + 1;
 		GameControlPanel.setDiceRoll(roll);
 		return roll;
 	}
