@@ -132,31 +132,37 @@ public class BoardCell {
 	}
 	
 	
-	
+	/*
+	 * drawing cells based on room and target
+	 */
 	public void draw(int cellWidth, int cellHeight, Graphics g, boolean isTarget) {
 		if(isRoom) {
 			if (Board.getInstance().getTargets().contains(Board.getInstance().getRoom(this).getCenterCell())) {
-				g.setColor(Color.pink);
+				g.setColor(Color.pink);			//if the cell is part of a room and that room is a target highlight the cell
 			} else {
 				g.setColor(Color.gray);
 			}
 			g.fillRect(cellWidth * this.col, cellHeight * this.row, cellWidth, cellHeight);
 		}else if (this.initial == 'X'){
-			g.setColor(Color.black);
+			g.setColor(Color.black);			// if the cell is unused, make it black
 			g.fillRect(cellWidth * this.col, cellHeight * this.row, cellWidth, cellHeight);
 		}else {
-			if (isTarget) {
+			if (isTarget) {						// if the cell is a target highlight it
 				g.setColor(Color.pink);
 			} else {
 				g.setColor(Color.yellow);
 			}
 			g.fillRect(cellWidth * this.col, cellHeight * this.row, cellWidth, cellHeight);
 			g.setColor(Color.black);
-			g.drawRect(cellWidth * this.col, cellHeight * this.row, cellWidth, cellHeight);
+			g.drawRect(cellWidth * this.col, cellHeight * this.row, cellWidth, cellHeight);		// only draw a border for walkways
 		}
 		
 	}
 	
+	
+	/*
+	 * drawing doorways so that drawing cells does not overwrite
+	 */
 	public void drawDoorways(int cellWidth, int cellHeight, Graphics g) {
 		int doorWidth = (int) (0.1 * cellWidth);
 				

@@ -523,7 +523,7 @@ public class Board extends JPanel{
 	}
 
 	/*
-	 * mouse listener for selecting the target the hman player moves to
+	 * mouse listener for selecting the target the human player moves to
 	 */
 	private class BoardListener implements MouseListener{
 
