@@ -17,17 +17,17 @@ public class ComputerPlayer extends Player {
 		
 		Card weapon = new Card("blank", CardType.ROOM);
 		Card person = new Card("blank", CardType.ROOM);
-		boolean w = false, p = false;
+		boolean weaponIsPicked = false, personIsPicked = false;
 		
-		while (!(w && p)) {
+		while (!(weaponIsPicked && personIsPicked)) {
 			int index = rand.nextInt(deck.size());
-			if (((Card) deck.get(index)).getCardType() == CardType.WEAPON && w == false && !this.seenOrHandContainsName(((Card) deck.get(index)).getCardName())) {
+			if (((Card) deck.get(index)).getCardType() == CardType.WEAPON && weaponIsPicked == false && !this.seenOrHandContainsName(((Card) deck.get(index)).getCardName())) {
 				weapon = (Card) deck.get(index);
-				w = true;
+				weaponIsPicked = true;
 				deck.remove(index);
-			} else if (((Card) deck.get(index)).getCardType() == CardType.CHARACTER && p == false && !this.seenOrHandContainsName(((Card) deck.get(index)).getCardName())) {
+			} else if (((Card) deck.get(index)).getCardType() == CardType.CHARACTER && personIsPicked == false && !this.seenOrHandContainsName(((Card) deck.get(index)).getCardName())) {
 				person = (Card) deck.get(index);
-				p = true;
+				personIsPicked = true;
 				deck.remove(index);
 			} else {
 				deck.remove(index);
