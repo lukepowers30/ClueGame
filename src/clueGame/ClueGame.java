@@ -26,16 +26,20 @@ public class ClueGame extends JFrame {
 
 	public ClueGame(Board boardPanel) throws HeadlessException {
 		super();
+		// Setup frame
 		this.setSize(1000, 800);  // size the frame
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // allow it to close
 		this.setVisible(true); // make it visible
 		this.setTitle("Clue Game");
+		
 		this.setLayout(new BorderLayout());
+		// Add panels to Frame
 		cardPanel = new CardPanel();
 		gcPanel = new GameControlPanel();
 		this.add(boardPanel, BorderLayout.CENTER);
 		this.add(cardPanel, BorderLayout.EAST);
 		this.add(gcPanel, BorderLayout.SOUTH);
+		// Finish display
 		boardPanel.repaint();
 		this.revalidate();
 	}
