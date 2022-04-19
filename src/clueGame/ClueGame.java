@@ -14,6 +14,12 @@ public class ClueGame extends JFrame {
 	private CardPanel cardPanel;
 	private GameControlPanel gcPanel;
 	
+	private static ClueGame theInstance;
+	
+	public static ClueGame getInstance() {
+		return theInstance;
+	}
+	
 	
 
 	public CardPanel getCardPanel() {
@@ -48,7 +54,11 @@ public class ClueGame extends JFrame {
 		Board board = Board.getInstance();
 		board.setConfigFiles("ClueLayout.csv", "ClueSetup.txt");
 		board.initialize();
-		ClueGame clueGame = new ClueGame(board);
+		
+		theInstance = new ClueGame(Board.getInstance());
+		ClueGame clueGame = ClueGame.getInstance();
+		Board.getInstance().repaint();
+		clueGame.revalidate();
 		JOptionPane startMessage = new JOptionPane();
 		startMessage.showMessageDialog(clueGame, "You are George! \n Can you find the Solution before the Computer players?");
 		clueGame.getGcPanel().updatePanel();

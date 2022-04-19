@@ -2,6 +2,7 @@ package clueGame;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Map.Entry;
 import java.util.Random;
 import java.util.Set;
 
@@ -69,7 +70,30 @@ public class ComputerPlayer extends Player {
 	}
 	
 	public void makeAccusation() {
-		
+		Board board = Board.getInstance();
+		Set<Card> tempDeck = board.getDeck();
+		Solution solution = new Solution(new Card("", null), new Card("", null), new Card("", null));
+		if (this.seen.size() + this.getHand().size() == tempDeck.size() - 3) {
+			for (Entry<Card, Player> entry: this.seen.entrySet()) {
+				tempDeck.remove(entry.getKey());
+			}
+			for (Card card: this.getHand()) {
+				tempDeck.remove(card);
+			}
+			for (Card card: tempDeck) {
+				if (card.getCardType() == CardType.CHARACTER) {
+					solution.setPerson(card);
+				} else if (card.getCardType() == CardType.ROOM) {
+					solution.setRoom(card);
+				} else if (card.getCardType() == CardType.WEAPON) {
+					solution.setWeapon(card);
+				}
+			}
+			
+			// Handle the accusation
+		} else {
+			return;
+		}
 	}
 
 }

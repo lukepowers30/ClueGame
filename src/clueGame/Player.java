@@ -13,7 +13,19 @@ public abstract class Player {
 	private Color color;
 	private int row, column;
 	private Set<Card> hand;
+	private boolean movedToRoom;
+	
+	
+
 	protected Map<Card, Player> seen;
+	
+	public boolean isMovedToRoom() {
+		return movedToRoom;
+	}
+
+	public void setMovedToRoom(boolean movedToRoom) {
+		this.movedToRoom = movedToRoom;
+	}
 	
 	public String getName () {
 		return name;
@@ -33,6 +45,7 @@ public abstract class Player {
 		this.color = color;
 		this.row = row;
 		this.column = column;
+		this.movedToRoom = false;
 		this.hand = new HashSet<Card>();
 		this.seen = new HashMap<Card, Player>();
 	}
@@ -74,6 +87,21 @@ public abstract class Player {
 			}
 		}
 		return false;
+	}
+	
+	public void forceMove(BoardCell cell) {
+		Board board = Board.getInstance();
+		if(board.getCell(this.getRow(), this.getColumn()).isRoom()) {
+			board.getRoom(board.getCell(this.getRow(), this.getColumn())).removePlayer(this);
+		}else {
+			board.getCell(this.getRow(), this.getColumn()).setOccupied(false);
+		}
+		this.row = cell.getRow();
+		this.column = cell.getCol();
+		cell.setOccupied(true);
+		if(cell.isRoom()) {
+			board.getRoom(cell).addPlayer(this);
+		}
 	}
 	
 	public void drawPlayer(int cellWidth, int cellHeight, Graphics g) {

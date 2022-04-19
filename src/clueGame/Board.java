@@ -364,6 +364,11 @@ public class Board extends JPanel{
 	 * Recursive function that adds neighboring cells to the Set of targets for the given BoardCell
 	 */
 	private void findAllTargets(BoardCell thisCell, int stepsLeft) {
+		if (players.get(currentPlayerIndex).isMovedToRoom()) {
+			targets.add(thisCell);
+			players.get(currentPlayerIndex).setMovedToRoom(false);
+		}
+		
 		for (BoardCell c: thisCell.getAdjList()) {			// iterate through all adjacent cells
 			if(visited.contains(c)) {
 				continue;						// if already visited ignore
@@ -437,16 +442,41 @@ public class Board extends JPanel{
 		int stop = index;
 		index++;						// go to the player after the player that made the suggestion
 		Card disprove;
+		
+		
+		Player selectedPlayer = getPlayerFromCard(suggestion.getPerson());
+		selectedPlayer.setMovedToRoom(true);
+		selectedPlayer.forceMove(getCell(caller.getRow(), caller.getColumn()));
+		repaint();
+		
+		ClueGame clueGame = ClueGame.getInstance();
+		
+		String guessString = suggestion.getPerson().getCardName() + ", " + suggestion.getRoom().getCardName() + ", " + suggestion.getWeapon().getCardName();
+		clueGame.getGcPanel().setGuess(guessString, caller);
+		
 		do {
 			disprove = players.get(index).disproveSuggestion(suggestion);
 			if(disprove != null) {											// if disproved return the card and update seen
 				caller.updateSeen(disprove, players.get(index));
+				clueGame.getGcPanel().setGuessResult("Suggestion disproven!", players.get(index));
+				clueGame.getCardPanel().updatePanel();
 				return disprove;
 			}
 			index = (index + 1) % players.size();					// iterate through players
 		}while(index != stop);
+		clueGame.getGcPanel().setGuessResult("No new Clue", null);
 		return null;
 	}
+	
+	private Player getPlayerFromCard (Card card) {
+		for (Player p: players) {
+			if (p.getName().equals(card.getCardName())) {
+				return p;
+			}
+		}
+		return null;
+	}
+	
 	
 	/*
 	 * paint the board panel

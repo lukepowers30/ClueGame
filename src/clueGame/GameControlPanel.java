@@ -147,20 +147,29 @@ public class GameControlPanel extends JPanel {
 		
 		// test filling in the data
 		panel.setTurn(new ComputerPlayer( "Col. Mustard", Color.green, 0, 0), 5);
-		panel.setGuess( "I have no guess!");
-		panel.setGuessResult( "So you have nothing?");
+		panel.setGuess( "I have no guess!", null);
+		panel.setGuessResult( "So you have nothing?", null);
 	}
 
 
 
-	public void setGuessResult(String string) {
+	public void setGuessResult(String string, Player disprover) {
 		this.guessResultText.setText(string);
+		if (disprover == null) {
+			this.setBackground(Color.white);
+		} else {
+			this.setBackground(disprover.getColor());
+		}
 	}
 
 
 
-	public void setGuess(String string) {
+	public void setGuess(String string, Player caller) {
 		this.guessText.setText(string);
+		if (caller != null) {
+			this.setBackground(caller.getColor());
+		}
+		
 	}
 
 
