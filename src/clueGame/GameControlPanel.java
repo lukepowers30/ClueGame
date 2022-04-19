@@ -173,8 +173,9 @@ public class GameControlPanel extends JPanel {
 	}
 	
 	public void updatePanel() {
-		turnName.setText(Board.getInstance().getPlayers().get(Board.getInstance().getCurrentPlayerIndex()).getName());
-		turnName.setBackground(Board.getInstance().getPlayers().get(Board.getInstance().getCurrentPlayerIndex()).getColor());
+		Board board = Board.getInstance();
+		turnName.setText(board.getPlayers().get(board.getCurrentPlayerIndex()).getName());
+		turnName.setBackground(board.getPlayers().get(board.getCurrentPlayerIndex()).getColor());
 		rollValue.setText(Integer.toString(diceRoll));
 		revalidate();
 	}
