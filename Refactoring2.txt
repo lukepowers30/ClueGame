@@ -1,6 +1,52 @@
 //git log of refactoring
 
+commit ca229f4b1fc1ce97660b33172fa15ec0d07ade25
+Author: lukepowers30 <lukepowers@mines.edu>
+Date:   Mon Apr 18 19:53:33 2022 -0600
 
+    Updated variable names in ComputerPlayer.makeSuggestion()
+
+commit bc53e8cd803d8637cd57d2d9259c8f727bd55250
+Author: lukepowers30 <lukepowers@mines.edu>
+Date:   Mon Apr 18 19:50:44 2022 -0600
+
+    Cleaned up the mouseListener in Board
+
+commit dfddbd76c43e1da2b0e64f3392482cb90840ae10
+Author: lukepowers30 <lukepowers@mines.edu>
+Date:   Mon Apr 18 19:47:48 2022 -0600
+
+    Removed unnecessary getInstance Calls from GameControlPanel
+
+commit ab454966863fd00d31c29b75758f9ede9bf636e7
+Author: lukepowers30 <lukepowers@mines.edu>
+Date:   Mon Apr 18 19:42:59 2022 -0600
+
+    Organized ClueGame
+
+commit 266e06e73cfc35a9bfeed1ff218ecefb856a4a25
+Author: jrkohlsaat <jrkohlsaat@mines.edu>
+Date:   Mon Apr 18 10:35:36 2022 -0600
+
+    commented out boardcell
+
+commit 3ac1e85dc3b0317e62065f0e600d85e5a74766ae
+Author: jrkohlsaat <jrkohlsaat@mines.edu>
+Date:   Mon Apr 18 10:27:17 2022 -0600
+
+    refactored human player in mouse clicker to be instance variable
+
+commit 6d7f4c948d16e0b8309ab6d77fd77b88e0d51919
+Author: jrkohlsaat <jrkohlsaat@mines.edu>
+Date:   Mon Apr 18 10:19:41 2022 -0600
+
+    commented out board
+
+commit 8df4e2fd4544b71d8f09ace58e3a76635debaa59
+Author: jrkohlsaat <jrkohlsaat@mines.edu>
+Date:   Mon Apr 18 10:05:16 2022 -0600
+
+    moved getters and setters to be in one place
 
 
 
