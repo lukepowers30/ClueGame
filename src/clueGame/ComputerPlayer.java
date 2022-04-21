@@ -35,7 +35,7 @@ public class ComputerPlayer extends Player {
 			}
 		}
 		
-		Solution suggestion = new Solution(new Card(room.getName(), CardType.ROOM), person, weapon);
+		Solution suggestion = new Solution(Board.getInstance().getCardFromName(room.getName()), person, weapon);
 		return suggestion;
 	}
 	

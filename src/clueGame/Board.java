@@ -441,7 +441,7 @@ public class Board extends JPanel{
 	public Card handleSuggestion(Solution suggestion, Player caller) {
 		int index = players.indexOf(caller);
 		int stop = index;
-		index++;						// go to the player after the player that made the suggestion
+		index = (index + 1) % players.size();						// go to the player after the player that made the suggestion
 		Card disprove;
 		
 		
@@ -468,6 +468,17 @@ public class Board extends JPanel{
 		clueGame.getGcPanel().setGuessResult("No new Clue", null);
 		return null;
 	}
+	
+	
+	public Card getCardFromName(String name) {
+		for(Card c: deck) {
+			if(c.getCardName() == name) {
+				return c;
+			}
+		}
+		return null;
+	}
+	
 	
 	private Player getPlayerFromCard (Card card) {
 		for (Player p: players) {
@@ -524,6 +535,9 @@ public class Board extends JPanel{
 	public void goToNextPlayer() {
 		currentPlayerIndex = (currentPlayerIndex + 1) % 6;
 		Player currentPlayer = players.get(this.currentPlayerIndex);
+		GameControlPanel gameControl = ClueGame.getInstance().getGcPanel();
+		gameControl.setGuess("", null);
+		gameControl.setGuessResult("", null);
 		int roll = rollDice();
 		if (currentPlayer instanceof HumanPlayer) {					// for human player calc targets and repaint
 			calcTargets(grid[currentPlayer.getRow()][currentPlayer.getColumn()], roll);

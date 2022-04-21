@@ -14,10 +14,9 @@ import javax.swing.JTextField;
 public class SuggestionPromptPanel extends JPanel {
 	private JComboBox<String> room, weapon, person;
 	private JButton submit, cancel;
+	
 	private boolean suggestion;
-	
 	private String roomName;
-	
 	private JFrame suggestionFrame;
 	
 	
@@ -81,22 +80,25 @@ public class SuggestionPromptPanel extends JPanel {
 		this.add(cancel);
 		
 		suggestionFrame.add(this);
+		ButtonListener buttonListener = new ButtonListener();
+		submit.addActionListener(buttonListener);
+		cancel.addActionListener(buttonListener);
 	}
 	
-	private class buttonListener implements ActionListener {
+	private class ButtonListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			Board board = Board.getInstance();
 			if (e.getSource() == submit) {
-				Card weaponCard = new Card((String)weapon.getSelectedItem(), CardType.WEAPON);
-				Card personCard = new Card((String)person.getSelectedItem(), CardType.CHARACTER);
+				Card weaponCard = board.getCardFromName((String) weapon.getSelectedItem());
+				Card personCard = board.getCardFromName((String) person.getSelectedItem());
 				
 				if (suggestion) {
-					Solution solution = new Solution(new Card(roomName, CardType.ROOM), personCard, weaponCard);
+					Solution solution = new Solution(board.getCardFromName(roomName), personCard, weaponCard);
 					board.handleSuggestion(solution, board.getPlayers().get(0));
 				} else {
-					Card roomCard = new Card((String)room.getSelectedItem(), CardType.ROOM);
+					Card roomCard = board.getCardFromName((String) room.getSelectedItem());
 					Solution solution = new Solution(roomCard, personCard, weaponCard);
 					boolean correct = board.checkAccusation(solution);
 					ClueGame.getInstance().endGame(correct, true);

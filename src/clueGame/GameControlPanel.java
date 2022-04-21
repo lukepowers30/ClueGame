@@ -100,8 +100,6 @@ public class GameControlPanel extends JPanel {
 		nextButton.addActionListener(buttonListener);
 		accusationButton.addActionListener(buttonListener);
 		
-		
-		
 	}
 	
 	private class ButtonListener implements ActionListener {
@@ -166,27 +164,30 @@ public class GameControlPanel extends JPanel {
 
 
 	public void setGuessResult(String string, Player disprover) {
-		this.guessResultText.setText(string);
+		guessResultText.setText(string);
 		if (disprover == null) {
-			this.setBackground(Color.white);
+			guessResultText.setOpaque(false);
 		} else {
-			this.setBackground(disprover.getColor());
+			guessResultText.setOpaque(true);
+			guessResultText.setBackground(disprover.getColor());
 		}
 	}
 
 
 
 	public void setGuess(String string, Player caller) {
-		this.guessText.setText(string);
+		guessText.setText(string);
 		if (caller != null) {
-			this.setBackground(caller.getColor());
+			guessText.setOpaque(true);
+			guessText.setBackground(caller.getColor());
+		}else {
+			guessText.setOpaque(false);
 		}
-		
 	}
 
 
-
-	public void setTurn(ComputerPlayer computerPlayer, int i) {
+	// Function only used for testing
+	public void setTurn(Player computerPlayer, int i) {
 		turnName.setText(computerPlayer.getName());
 		turnName.setBackground(computerPlayer.getColor());
 		rollValue.setText(Integer.toString(i));
