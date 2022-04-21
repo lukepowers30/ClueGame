@@ -109,7 +109,19 @@ public class GameControlPanel extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			Board board = Board.getInstance();
+			
 			if (e.getSource() == accusationButton) {
+				Player currentPlayer = board.getPlayers().get(board.getCurrentPlayerIndex());
+				if (currentPlayer instanceof HumanPlayer) {
+					SuggestionPromptPanel suggestionPanel = new SuggestionPromptPanel(false, null);
+					
+					JOptionPane c = new JOptionPane();
+					
+					
+				} else {
+					JOptionPane notTurn = new JOptionPane();
+					notTurn.showMessageDialog(ClueGame.getInstance(), "It is not your turn.");
+				}
 				
 			} else if (e.getSource() == nextButton) {
 				Player currentPlayer = board.getPlayers().get(board.getCurrentPlayerIndex());

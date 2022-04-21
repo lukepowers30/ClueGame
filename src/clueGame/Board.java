@@ -434,6 +434,7 @@ public class Board extends JPanel{
 		return accusation.isEquals(theAnswer);
 	}
 	
+	
 	/*
 	 * Function to cycle through players and return a card that disproves a suggestion.
 	 */
@@ -539,7 +540,8 @@ public class Board extends JPanel{
 			((ComputerPlayer) currentPlayer).move(roll);
 			repaint();
 			if(grid[currentPlayer.getRow()][currentPlayer.getColumn()].isRoomCenter()) {
-				((ComputerPlayer) currentPlayer).makeSuggestion(this.getRoom(grid[currentPlayer.getRow()][currentPlayer.getColumn()]));
+				Solution suggestion = ((ComputerPlayer) currentPlayer).makeSuggestion(this.getRoom(grid[currentPlayer.getRow()][currentPlayer.getColumn()]));
+				handleSuggestion(suggestion, currentPlayer);
 			}
 		}
 		
@@ -580,6 +582,10 @@ public class Board extends JPanel{
 				}else {
 					JOptionPane error = new JOptionPane();
 					error.showMessageDialog(Board.getInstance(), "That is not a Target.");
+				}
+				BoardCell currentCell = getCell(human.getRow(), human.getColumn());
+				if (currentCell.isRoom()) {
+					SuggestionPromptPanel suggestionPrompt = new SuggestionPromptPanel(true, roomMap.get(currentCell.getInitial()).getName());
 				}
 			}
 			

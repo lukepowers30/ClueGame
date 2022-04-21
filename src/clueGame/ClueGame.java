@@ -64,6 +64,18 @@ public class ClueGame extends JFrame {
 		clueGame.getGcPanel().updatePanel();
 
 	}
+	
+	public void endGame (boolean correctAccusation, boolean human) {
+		JOptionPane endMessage = new JOptionPane();
+		if (correctAccusation && human) {
+			endMessage.showMessageDialog(this, "Congratulations! You found the murderer!");
+		} else if (correctAccusation) {
+			endMessage.showMessageDialog(this, "You lost. The computer player found the murderer first.");
+		} else {
+			endMessage.showMessageDialog(this, "You lost. Your accusation was incorrect.");
+		}
+		this.dispose();
+	}
 
 
 }
