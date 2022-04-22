@@ -107,9 +107,8 @@ public class GameControlPanel extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			Board board = Board.getInstance();
-			
-			if (e.getSource() == accusationButton) {
-				Player currentPlayer = board.getPlayers().get(board.getCurrentPlayerIndex());
+			Player currentPlayer = board.getPlayers().get(board.getCurrentPlayerIndex());
+			if (e.getSource() == accusationButton && currentPlayer.isNotBusy()) {
 				if (currentPlayer instanceof HumanPlayer) {
 					SuggestionPromptPanel suggestionPanel = new SuggestionPromptPanel(false, null);
 					
@@ -121,8 +120,7 @@ public class GameControlPanel extends JPanel {
 					notTurn.showMessageDialog(ClueGame.getInstance(), "It is not your turn.");
 				}
 				
-			} else if (e.getSource() == nextButton) {
-				Player currentPlayer = board.getPlayers().get(board.getCurrentPlayerIndex());
+			} else if (e.getSource() == nextButton && currentPlayer.isNotBusy()) {
 				if (currentPlayer instanceof HumanPlayer) {
 					if (((HumanPlayer) currentPlayer).isHasMoved()) {
 						board.goToNextPlayer();

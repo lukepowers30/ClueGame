@@ -14,7 +14,7 @@ public abstract class Player {
 	private int row, column;
 	private Set<Card> hand;
 	private boolean movedToRoom;
-	
+	private boolean notBusy;
 	
 
 	protected Map<Card, Player> seen;
@@ -27,6 +27,14 @@ public abstract class Player {
 		this.movedToRoom = movedToRoom;
 	}
 	
+	public boolean isNotBusy() {
+		return notBusy;
+	}
+
+	public void setNotBusy(boolean notBusy) {
+		this.notBusy = notBusy;
+	}
+
 	public String getName () {
 		return name;
 	}
@@ -48,6 +56,7 @@ public abstract class Player {
 		this.movedToRoom = false;
 		this.hand = new HashSet<Card>();
 		this.seen = new HashMap<Card, Player>();
+		this.notBusy = true;
 	}
 	
 	

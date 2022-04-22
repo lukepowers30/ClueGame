@@ -443,7 +443,7 @@ public class Board extends JPanel{
 		int stop = index;
 		index = (index + 1) % players.size();						// go to the player after the player that made the suggestion
 		Card disprove;
-		
+		caller.setNotBusy(true);
 		
 		Player selectedPlayer = getPlayerFromCard(suggestion.getPerson());
 		selectedPlayer.setMovedToRoom(true);
@@ -598,7 +598,8 @@ public class Board extends JPanel{
 					error.showMessageDialog(Board.getInstance(), "That is not a Target.");
 				}
 				BoardCell currentCell = getCell(human.getRow(), human.getColumn());
-				if (currentCell.isRoom()) {
+				if (currentCell.isRoom() && human.isHasMoved()) {
+					human.setNotBusy(false);
 					SuggestionPromptPanel suggestionPrompt = new SuggestionPromptPanel(true, roomMap.get(currentCell.getInitial()).getName());
 				}
 			}
