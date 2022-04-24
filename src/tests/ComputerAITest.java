@@ -3,6 +3,8 @@ package tests;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.awt.Color;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -55,8 +57,10 @@ class ComputerAITest {
 		int counterCandleStick = 0;
 		int counterWrench = 0;
 		
+		test.setHand(new HashSet<Card>());
+		
 		// Tests for multiple unseen weapons and people
-		for(int i = 0; i < 200; i++) {
+		for(int i = 0; i < 2000; i++) {
 			Solution sol2 = test.makeSuggestion(board.getRoom('K'));
 			if (sol2.getPerson().getCardName().equals("Jane")) {
 				counterJane++;
@@ -101,24 +105,27 @@ class ComputerAITest {
 		assertEquals(room.getName(), "Mud Room");
 		
 		// Test for no room
-		ComputerPlayer test2 = new ComputerPlayer("test", Color.black, 18, 1);
-		int counter180 = 0;
-		int counter171 = 0;
-		int counter182 = 0;
-		for(int i = 0; i < 100; i++) {
-			test2 = new ComputerPlayer("test", Color.black, 18, 1);
-			test2.move(1);
-			if(test2.getRow() == 18 && test2.getColumn() == 0) {
-				counter180++;
-			}else if(test2.getRow() == 18 && test2.getColumn() == 2) {
-				counter182++;
-			}else if(test2.getRow() == 17 && test2.getColumn() == 1) {
-				counter171++;
-			}
-		}
-		assertTrue(counter180 > 0);
-		assertTrue(counter182 > 0);
-		assertTrue(counter171 > 0);
+				ComputerPlayer test2 = new ComputerPlayer("test", Color.black, 18, 1);
+				int counter180 = 0;
+				int counter171 = 0;
+				int counter182 = 0;
+				for(int i = 0; i < 100; i++) {
+					test2 = new ComputerPlayer("test", Color.black, 18, 1);
+					test2.move(1);
+					if(test2.getRow() == 18 && test2.getColumn() == 0) {
+						board.getCell(18, 0).setOccupied(false);
+						counter180++;
+					}else if(test2.getRow() == 18 && test2.getColumn() == 2) {
+						counter182++;
+						board.getCell(18, 2).setOccupied(false);
+					}else if(test2.getRow() == 17 && test2.getColumn() == 1) {
+						counter171++;
+						board.getCell(17, 1).setOccupied(false);
+					}
+				}
+				assertTrue(counter180 > 0);
+				assertTrue(counter182 > 0);
+				assertTrue(counter171 > 0);
 		
 		ComputerPlayer test3 = new ComputerPlayer("test", Color.black, 4, 19);
 		test3.updateSeen(new Card("Mud Room", CardType.ROOM), new ComputerPlayer("George", Color.BLACK, 0, 0));
@@ -133,12 +140,16 @@ class ComputerAITest {
 			test3.move(1);
 			if(test3.getRow() == 4 && test3.getColumn() == 18) {
 				counter418++;
+				board.getCell(4, 18).setOccupied(false);
 			}else if(test3.getRow() == 5 && test3.getColumn() == 19) {
 				counter519++;
+				board.getCell(5, 19).setOccupied(false);
 			}else if(test3.getRow() == 4 && test3.getColumn() == 20) {
 				counter420++;
+				board.getCell(4, 20).setOccupied(false);
 			}else if(test3.getRow() == 2 && test3.getColumn() == 24) {
 				counter224++;
+				board.getCell(2, 24).setOccupied(false);
 			}
 		}
 		assertTrue(counter224 > 1);

@@ -42,6 +42,10 @@ public abstract class Player {
 	public Set<Card> getHand() {
 		return hand;
 	}
+	
+	public void setHand(Set<Card> newHand) {
+		this.hand = newHand;
+	}
 
 	public void updateHand (Card card) {
 		hand.add(card);

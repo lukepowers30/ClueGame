@@ -67,7 +67,7 @@ public class CardPanel extends JPanel {
 	private JPanel createSeenPanel(CardType type) {
 		JPanel seen = new JPanel();
 		seen.setLayout(new GridLayout(0,1));
-		JLabel label = new JLabel("Seen:");
+		JLabel label = new JLabel("Seen:            ");
 		seen.add(label);
 		for(Map.Entry<Card, Player> entry: Board.getInstance().getPlayers().get(0).getSeen().entrySet()) {
 			if(entry.getKey().getCardType() == type) {
@@ -83,7 +83,7 @@ public class CardPanel extends JPanel {
 	private JPanel createHandPanel(CardType type) {
 		JPanel hand = new JPanel();
 		hand.setLayout(new GridLayout(0,1));
-		JLabel label = new JLabel("In Hand:");
+		JLabel label = new JLabel("In Hand:           ");
 		hand.add(label);
 		for(Card c: Board.getInstance().getPlayers().get(0).getHand()) {
 			if(c.getCardType() == type) {

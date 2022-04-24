@@ -92,7 +92,7 @@ public class ComputerPlayer extends Player {
 			
 			// Handle the accusation
 			boolean correct = board.checkAccusation(solution);
-			ClueGame.getInstance().endGame(correct, false);
+			ClueGame.getInstance().endGame(correct, false, solution);
 		} else {
 			return;
 		}

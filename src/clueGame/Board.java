@@ -577,7 +577,7 @@ public class Board extends JPanel{
 		public void mouseClicked(MouseEvent e) {
 			if(currentPlayerIndex != 0) {		// if its not the human players turn, don't do anything
 				return;
-			}else {
+			}else if (players.get(0).isNotBusy() && !((HumanPlayer) players.get(0)).isHasMoved()){
 				int cellWidth = Board.super.getWidth() / Board.getInstance().numColumns;
 				int cellHeight = Board.super.getHeight() / Board.getInstance().numRows;
 				int column = e.getX() / cellWidth;

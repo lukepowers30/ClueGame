@@ -1,0 +1,4 @@
+Included in the clueGame folder is a jar file for our project
+
+Our Game solution test errors because ClueGame is not initialized
+Our FileInitTests306 errors because the given set of files don't have any cards in them.

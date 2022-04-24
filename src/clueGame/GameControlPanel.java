@@ -110,11 +110,14 @@ public class GameControlPanel extends JPanel {
 			Player currentPlayer = board.getPlayers().get(board.getCurrentPlayerIndex());
 			if (e.getSource() == accusationButton && currentPlayer.isNotBusy()) {
 				if (currentPlayer instanceof HumanPlayer) {
-					SuggestionPromptPanel suggestionPanel = new SuggestionPromptPanel(false, null);
-					
-					JOptionPane c = new JOptionPane();
-					
-					
+					if(!((HumanPlayer) currentPlayer).isHasMoved()) {
+						SuggestionPromptPanel suggestionPanel = new SuggestionPromptPanel(false, null);
+						
+						JOptionPane c = new JOptionPane();
+					}else {
+						JOptionPane notTurn = new JOptionPane();
+						notTurn.showMessageDialog(ClueGame.getInstance(), "You can only make an accusation at the start of your turn.");
+					}
 				} else {
 					JOptionPane notTurn = new JOptionPane();
 					notTurn.showMessageDialog(ClueGame.getInstance(), "It is not your turn.");

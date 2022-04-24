@@ -105,7 +105,7 @@ public class SuggestionPromptPanel extends JPanel {
 					Card roomCard = board.getCardFromName((String) room.getSelectedItem());
 					Solution solution = new Solution(roomCard, personCard, weaponCard);
 					boolean correct = board.checkAccusation(solution);
-					ClueGame.getInstance().endGame(correct, true);
+					ClueGame.getInstance().endGame(correct, true, solution);
 				}
 				
 			}

@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import clueGame.Board;
 import clueGame.Card;
 import clueGame.CardType;
+import clueGame.ClueGame;
 import clueGame.ComputerPlayer;
 import clueGame.HumanPlayer;
 import clueGame.Player;
@@ -30,6 +31,7 @@ class GameSolutionTest {
 		board.setConfigFiles("ClueLayout.csv", "ClueSetup.txt");		
 		// Initialize will load config files 
 		board.initialize();
+		
 	}
 
 	@Test
@@ -98,9 +100,9 @@ class GameSolutionTest {
 	
 	@Test
 	void handleSuggestionTest() {
-		Player test1 = new HumanPlayer("test1", Color.red, 0, 0);
-		Player test2 = new ComputerPlayer("test2", Color.red, 0, 0);
-		Player test3 = new ComputerPlayer("test3", Color.red, 0, 0);
+		Player test1 = new HumanPlayer("George", Color.red, 0, 0);
+		Player test2 = new ComputerPlayer("Bob", Color.red, 0, 0);
+		Player test3 = new ComputerPlayer("Sally", Color.red, 0, 0);
 		Card card1 = new Card("Patio", CardType.ROOM);
 		Card card2 = new Card("Bob", CardType.CHARACTER);
 		Card card3 = new Card("Knife", CardType.WEAPON);

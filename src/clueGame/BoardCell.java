@@ -1,6 +1,7 @@
 package clueGame;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.util.HashSet;
 import java.util.Set;
@@ -136,7 +137,13 @@ public class BoardCell {
 	 * drawing cells based on room and target
 	 */
 	public void draw(int cellWidth, int cellHeight, Graphics g, boolean isTarget) {
-		if(isRoom) {
+		if(secretPassage != ' ') {
+			g.setColor(new Color(128, 0, 128)); //purple
+			g.fillRect(cellWidth * this.col, cellHeight * this.row, cellWidth, cellHeight);
+			g.setColor(Color.cyan);
+			g.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, cellHeight / 2));
+			g.drawString(Character.toString(secretPassage), (int)((this.col + 0.25) * cellWidth), (int)((this.row + 0.75) * cellHeight));
+		}else if(isRoom) {
 			if (Board.getInstance().getTargets().contains(Board.getInstance().getRoom(this).getCenterCell())) {
 				g.setColor(Color.pink);			//if the cell is part of a room and that room is a target highlight the cell
 			} else {

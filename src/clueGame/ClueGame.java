@@ -65,14 +65,20 @@ public class ClueGame extends JFrame {
 
 	}
 	
-	public void endGame (boolean correctAccusation, boolean human) {
+	public void endGame (boolean correctAccusation, boolean human, Solution accusation) {
 		JOptionPane endMessage = new JOptionPane();
 		if (correctAccusation && human) {
-			endMessage.showMessageDialog(this, "Congratulations! You found the murderer!");
+			endMessage.showMessageDialog(this, accusation.getPerson().getCardName() + " was accused of murder in the " 
+					+ accusation.getRoom().getCardName() + " using the " + accusation.getWeapon().getCardName() + ".\n" +
+					"Congratulations! You found the murderer!");
 		} else if (correctAccusation) {
-			endMessage.showMessageDialog(this, "You lost. The computer player found the murderer first.");
+			endMessage.showMessageDialog(this, accusation.getPerson().getCardName() + " was accused of murder in the " 
+					+ accusation.getRoom().getCardName() + " using the " + accusation.getWeapon().getCardName() + ".\n" +
+					"You lost. The computer player found the murderer first.");
 		} else {
-			endMessage.showMessageDialog(this, "You lost. Your accusation was incorrect.");
+			endMessage.showMessageDialog(this, accusation.getPerson().getCardName() + " was accused of murder in the " 
+					+ accusation.getRoom().getCardName() + " using the " + accusation.getWeapon().getCardName() + ".\n" +
+					"You lost. Your accusation was incorrect.");
 		}
 		this.dispose();
 	}
