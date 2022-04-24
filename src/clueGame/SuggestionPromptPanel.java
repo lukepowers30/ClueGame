@@ -25,7 +25,11 @@ public class SuggestionPromptPanel extends JPanel {
 		suggestionFrame.setVisible(true);
 		suggestionFrame.setSize(400, 250);
 		suggestionFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		suggestionFrame.setTitle("Make an Accusation");
+		if(suggestion) {
+			suggestionFrame.setTitle("Make an Suggestion");
+		}else {
+			suggestionFrame.setTitle("Make an Accusation");
+		}
 		
 		
 		
@@ -105,6 +109,7 @@ public class SuggestionPromptPanel extends JPanel {
 				}
 				
 			}
+			board.getPlayers().get(0).setNotBusy(true);
 			suggestionFrame.dispose();
 			
 		}
